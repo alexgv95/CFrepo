@@ -1,0 +1,474 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26-oct-2019, 10:39:45
+    Author     : GoirienaProgrammer
+*/
+
+#menu{
+    position: fixed;
+    background-color: #e86d18;
+}
+
+#ulMenu{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 30px;
+    overflow: hidden;
+    font-size: 32px;
+}
+
+.liMenu{
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.commandLinkStyle {
+    text-decoration: none;
+    color: white;
+}
+.headerAdminSocio{
+    text-decoration: none;
+    color: white;
+}
+.liMenu:hover {
+  background-color: grey;
+}
+
+#logo{
+    padding-left: 100px;
+}
+
+#tablaClases{
+    width: 40%
+}
+
+.trClases, tdClases {
+    width: 25%;
+   text-align: center;
+}
+.liListaClases{
+    list-style-type: none;
+    text-align:left;
+}
+
+#left{
+    float: left;
+}
+
+#right{
+    float: right;
+}
+
+/*
+.top{
+    position: fixed;
+    background-color: grey;
+}
+*/
+
+/*
+#tablaMenu{
+    font-size: 30px;
+    font-family: Calibri;
+    padding: 10px;
+    border-bottom: 3px solid darkblue;
+    border-top: 3px solid darkblue;
+
+}
+
+.tdMenu{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:none;
+    overflow: hidden;
+    outline:none;
+    font-size: 25px;
+    font-family: Calibri;
+
+}
+*/
+
+
+
+
+/*
+#menu {
+    padding: 0;
+    padding-left: 11em;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border-bottom: 3px solid darkblue;
+    border-top: 3px solid darkblue;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    font-size: 25px;
+    font-family: Calibri;
+}*/
+/*ul.menu {
+    font-size: 25px; 
+    font-family: Calibri;
+    padding: 20px;
+    border-bottom: 3px solid darkblue;
+    border-top: 3px solid darkblue;
+}*/
+
+#formContact input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+}
+
+#formContact input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder {
+    color: #bbb5af;
+}
+
+#formContact input::-moz-placeholder, textarea::-moz-placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+}
+
+#formContact input:focus::-moz-placeholder, textarea:focus::-moz-placeholder {
+    color: #bbb5af;
+}
+
+#formContact input::placeholder, textarea::placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+}
+
+#formContact input:focus::placeholder, textarea::focus:placeholder {
+    color: #bbb5af;
+}
+
+#formContact input::-ms-placeholder, textarea::-ms-placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+}
+
+#formContact input:focus::-ms-placeholder, textarea:focus::-ms-placeholder {
+    color: #bbb5af;
+}
+
+/* on hover placeholder */
+
+#formContact input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+}
+
+#formContact input:hover:focus::-webkit-input-placeholder, textarea:hover:focus::-webkit-input-placeholder {
+    color: #cbc6c1;
+}
+
+#formContact input:hover::-moz-placeholder, textarea:hover::-moz-placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+}
+
+#formContact input:hover:focus::-moz-placeholder, textarea:hover:focus::-moz-placeholder {
+    color: #cbc6c1;
+}
+
+#formContact input:hover::placeholder, textarea:hover::placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+}
+
+#formContact input:hover:focus::placeholder, textarea:hover:focus::placeholder {
+    color: #cbc6c1;
+}
+
+#formContact input:hover::placeholder, textarea:hover::placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+}
+
+#formContact input:hover:focus::-ms-placeholder, textarea:hover::focus:-ms-placeholder {
+    color: #cbc6c1;
+}
+
+
+
+#formContact  {
+    position: relative;
+    width: 380px;
+    margin: 50px auto 100px auto;
+}
+
+#formContact input {
+    font-size: 0.875em;
+    width: 470px;
+    height: 50px;
+    padding: 0px 15px 0px 15px;
+
+    background: transparent;
+    outline: none;
+    color: #726659;
+
+    border: solid 1px #b3aca7;
+    border-bottom: none;
+
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+}
+
+#formContact input:hover {
+    background: #b3aca7;
+    color: #e2dedb;
+}
+
+#formContact textarea {
+    width: 470px;
+    max-width: 470px;
+    height: 110px;
+    max-height: 110px;
+    padding: 15px;
+
+    background: transparent;
+    outline: none;
+
+    color: #726659;
+    font-size: 0.875em;
+
+    border: solid 1px #b3aca7;
+
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+}
+
+#formContact textarea:hover {
+    background: #b3aca7;
+    color: #e2dedb;
+}
+
+#formContact submit {
+    width: 502px;
+
+    padding: 0;
+    margin: -5px 0px 0px 0px;
+
+    font-size: 0.875em;
+    color: #b3aca7;
+
+    outline:none;
+    cursor: pointer;
+
+    border: solid 1px #b3aca7;
+    border-top: none;
+}
+
+#submit:hover {
+    color: #e2dedb;
+}
+
+
+#tablaInstalaciones{
+    margin-left: 5%;
+}
+
+.imagenHorario{
+    width: 65%;
+    height: 40%;
+
+}
+
+.imagenesTablaInstalaciones{
+
+    width: 75%;
+    height: 45%;
+    transition: transform .8s;
+}
+
+.imagenesTablaInstalaciones:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.5); 
+}
+
+
+#contenedorLogin{
+    margin-left: 45%;
+    width: 20%;
+    height: 200px;
+}
+
+
+#contenedorLogin input {
+    alignment-adjust: central;
+    height: 45px;
+    width: 55%;
+
+
+}
+
+#contenedorLogin input:hover {
+    color: black;
+}
+
+#formLogin input[type=text] {
+  border: none;
+  border-bottom: 3px solid #e86d18;
+}
+#formLogin input[type=password] {
+  border: none;
+  border-bottom: 3px solid #e86d18;
+}
+
+#formLogin input[type=text] {
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+#formLogin input[type=password] {
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+#formLogin input[type=text]:focus {
+  width: 30%;
+}
+#formLogin input[type=password]:focus {
+  width: 30%;
+}
+
+
+#formLogin input[type=submit] {
+  background-color: #e86d18;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+#formLogin input[type=text]{
+    margin:auto;
+}
+
+#formLogin input[type=password]{
+    margin:auto;
+}
+#formLogin input [type=text]{
+    display: none;
+    
+}
+
+#formLogin input [type=password]{
+    display: none;
+    
+}
+
+#formLogin input:focus {
+    outline:none;
+}
+
+#headerSocioMostrarClases {
+    text-decoration: none;
+    color: white;
+    
+}
+
+.tablasMostrarObjetos{
+    
+    text-align: center;
+    
+    
+}
+.tablasMostrarObjetos tr{
+    
+    height: 35px;
+
+}
+.tablasMostrarObjetos td{
+    width: 200px;
+}
+
+.tablasMostrarObjetos tr:nth-child(odd) {
+    background-color:#ffa040;
+}
+.tablasMostrarObjetos tr:nth-child(even) {
+    background-color:#e6e6e6;
+}
+#cabeceraTablaMostrarObjetos{
+    background-color: #252850;
+    color: white;
+    font-weight: bold;
+    height: 60px;
+}
+
+
+
+#slider,  #slider .slide{
+  width: 500px;
+  height: 250px;
+}
+#slider {
+  overflow: hidden;
+  margin: 0 auto;
+  font-size: 1.2em;
+  text-align: center;
+  vertical-align: middle;
+}
+#slider .container {
+  position: relative;
+  width: 9000px; /* Assign an insanely large width */
+  top: 0;
+  right: 0;
+  animation: slide-animation 25s infinite;
+}
+#slider .slide {
+  position: relative;
+  float: left;
+  box-sizing: border-box;
+  padding: 10px 20px;
+}
+
+
+
+
+/* [ANIMATION] */
+@keyframes slide-animation {
+  0% { 
+    opacity: 0;
+    right: 0;
+  }
+  11% {
+    opacity: 1;
+    right: 0; 
+  }
+  22% { right: 100%; }
+  33% { right: 100%; }
+  44% { right: 200%; }
+  55% { right: 200%; }
+  66% { right: 300%; }
+  77% { right: 300%; }
+  88% {
+    opacity: 1;
+    right: 400%; 
+  }
+  100% {
+    opacity: 0;
+    right: 400%;
+  }
+}
+
+
+
+
+.informacionClases{
+    background-color: #cdcdcd;
+}

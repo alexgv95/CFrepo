@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+        <ui:composition template="./plantillas/templateVistaAdmin.xhtml"
+                        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                        xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+            <ui:define name="top">
+            </ui:define>
+
+            <ui:define name="content">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                
+                <p> #{requestScope.modificarMonitores}</p>
+                <table>
+                    <tr>
+                        <td>
+                <table class="tablasMostrarObjetos">
+                    <tr id="cabeceraTablaMostrarObjetos">
+                        <th>DNI</th>
+                        <th>NOMBRE</th>
+                        <th>E-MAIL</th>
+                        <th>SEGURIDAD SOCIAL</th>
+                        <th>TELEFONO</th>
+                    </tr>
+                        <tr>
+                            <td>#{monitor.dni}</td>
+                            <td>#{monitor.nombreCompleto}</td>
+                            <td>#{monitor.email}</td>
+                            <td>#{monitor.numeroSS}</td>
+                            <td>#{monitor.telefono}</td>
+                        </tr>
+                </table>
+                        </td>
+                        <td width="100px">
+                            <div width="100px">
+                                <p>INTRODUZCA TODOS LOS DATOS DE #{monitor.nombreCompleto} MODIFICANDO LOS QUE QUIERA </p>
+                                <form method="post" class="formLogin" action="/CeuFitSW1/modificarMonitores" align="center">
+                                    <input type="hidden" name="dniOriginal" value="#{monitor.dni}" />
+                                    <input id="DNI" name="dni" type="text" placeholder="DNI"/>
+                                    <input id="NombreCompleto" name="nombreCompleto" type="text" placeholder="NOMBRE Y APELLIDOS"/>
+                                    <input id="Email" name="email" type="text" placeholder="E-MAIL"/>
+                                    <input id="numeroSS" name="numeroSS" type="text" placeholder="Numero Seguridad Social"></input>
+                                    <input id="telefono" name="telefono" type="text" placeholder="Numero telefono"></input>
+                                    <input id="Enviar" type="submit" value="VAMOS!"/>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

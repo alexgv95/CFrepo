@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="/css/estilo.css"/>
+        <title>Clases - CEUFIT</title>
+    </h:head>
+
+    <body>
+
+        <ui:composition template="/plantillas/template.xhtml">
+
+            <ui:define name="top"></ui:define>
+
+            <ui:define name="left"></ui:define>
+
+
+            <ui:define name="content">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <p> #{requestScope.mostrarClasesInicio}</p>
+                <div class="divTabla">
+                    <table class="tablaClasesInicio">
+                        <tr id="cabeceraTablaMostrarObjetos">
+                            <th>CLASE</th>
+                            <th>DESCRIPCION</th>
+                            <th>HORARIO</th>
+                            <th>MONITOR</th>
+                            <th>COMENTARIOS</th>
+                            <th>FOTO</th>
+                        </tr>
+                        <c:forEach items="#{requestScope.clases}" var="clase">
+                            <tr class="informacionClases">
+                                <td>#{clase.clase}</td>
+                                <td>#{clase.descripcion}</td>
+                                <td>#{clase.horario}</td>
+                                <td>#{clase.monitor}</td>
+                                <td> 
+                                    <div id="slider">
+                                        <c:forEach items="#{clase.comentarios}" var="comentario">
+                                            <div class="container">
+                                                <div class="slide" >
+                                                    <p> #{comentario.comentario} </p>
+                                                    <p> #{comentario.valoracion} </p>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </div>        
+                                </td>
+                                <td><img src="./resources/imagenes/#{clase.clase}.jpg" width="200px" height="125px"/></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+
+            </ui:define>
+
+            <ui:define name="bottom"></ui:define>
+        </ui:composition>
+
+    </body>
+</html>

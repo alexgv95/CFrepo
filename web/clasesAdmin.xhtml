@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="/css/estilo.css"/>
+        <title>Vista Administrador</title>
+    </h:head>
+
+    <body>
+        <ui:composition template="./plantillas/templateVistaAdmin.xhtml">
+            <ui:define name="top">
+            </ui:define>
+
+            <ui:define name="content">
+                <br/><br/><br/><br/><br/><br/><br/>
+                <br/><br/>
+                <p>#{requestScope.mostrarClases}</p>
+                <table>
+                    <tr>
+                        <td>
+                            <table class="tablasMostrarObjetos">
+                                <tr id="cabeceraTablaMostrarObjetos">
+                                    <th>CLASE</th>
+                                    <th>HORARIO</th>
+                                    <th>MONITOR</th>
+                                    <th>ACCIÓN</th>
+                                </tr>
+                                <c:forEach items="#{requestScope.ArrayClases}" var="clase">
+                                    <tr>
+                                        <td>#{clase.clase}</td>
+                                        <td>#{clase.horario}</td>
+                                        <td>#{clase.monitor}</td>
+                                        <td>
+                                            <table id="botonesTabla">
+                                                <tr>
+                                                    <td>
+                                                        <form action="/CeuFitSW1/modificarClases" method="get">
+                                                            <input type="hidden" name="clase" value="#{clase.clase}"/>
+                                                            <input type="hidden" name="horario" value="#{clase.horario}"/>
+                                                            <input type="hidden" name="monitor" value="#{clase.monitor}"/>
+                                                            <input type="hidden" name="descripcion" value="#{clase.descripcion}"/>
+                                                            <input type="submit" value="MODIFICAR"/>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <form action="/CeuFitSW1/borrarClases" method="post">
+                                                            <input type="hidden" name="clase" value="#{clase.clase}"/>
+                                                            <input type="submit" value="BORRAR"/>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </td>
+                        <td width="100px">
+                            <div width="100px">
+                                <form method="post" class="formLogin" action="/CeuFitSW1/anhadirClases" align="center">
+                                    <input id="clase" name="clase" type="text" placeholder="Nombre de la clase"/>
+                                    <input id="horario" name="horario" type="text" placeholder="Horario"/>
+                                    <input id="monitor" name="monitor" type="text" placeholder="Monitor"/>
+                                    <input id="descripcion" name="descripcion" type="text" placeholder="Descripción"></input>
+                                    <input id="Enviar" type="submit" value="AÑADIR"/>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

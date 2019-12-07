@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+        <ui:composition template="./plantillas/templateVistaSocios.xhtml">
+
+            <ui:define name="top">
+            </ui:define>
+
+            <ui:define name="content">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <table class="tablasMostrarObjetos">
+                    <tr>
+                        <td>Clase</td>
+                        <td>Horario</td>
+                        <td>Monitor</td>
+                        <td>Apuntados</td>
+                    </tr>
+                    <ul>
+                        <c:forEach items="#{requestScope.MisClases}" var="entry">
+                            <tr>
+                                <td>#{entry.clase}</td>
+                                <td>#{entry.horario}</td>
+                                <td>#{entry.monitor}</td>
+                                <td>#{entry.ocupacion}</td>
+                            </tr>
+                        </c:forEach>
+                    </ul>
+                </table>
+            </ui:define>
+
+            <ui:define name="bottom">
+
+                <h>Danos tu opinión sobre las clases a las que has asistido</h>
+
+                <form  method="post" action="/CeuFitSW1/MostrarMisClases" id="formLogin" name="datos">
+                    <select name="tablasMostrarObjetos">
+                        <c:forEach items="#{requestScope.MisClases}" var="entry">
+                            <option value="#{entry.clase}">#{entry.clase}</option>
+                        </c:forEach>
+                    </select>
+                    <input type="number" name="valoracion" placeholder="VALORACION"/>
+                    <input type="text" name="comentario" placeholder="COMENTARIO"/>
+                    <br/><br/><input type="submit" name="enviar"></input>
+                </form>
+                <p></p><p>#{requestScope.ComentarioEnviado}</p>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

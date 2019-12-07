@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+        <ui:composition template="./plantillas/templateVistaAdmin.xhtml"
+                        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                        xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+            <ui:define name="top">
+            </ui:define>
+
+            <ui:define name="content">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+                <p> #{requestScope.modificarClases}</p>
+                <table>
+                    <tr>
+                        <td>
+                            <table class="tablasMostrarObjetos">
+                                <tr id="cabeceraTablaMostrarObjetos">
+                                    <th>CLASE</th>
+                                    <th>HORARIO</th>
+                                    <th>MONITOR</th>
+                                    <th>DESCRIPCIÓN</th>
+                                </tr>
+                                <p>Esta editando la clase <b>#{claseAEditar.clase}</b></p>
+                                <tr>
+                                    <td>#{claseAEditar.clase}</td>
+                                    <td>#{claseAEditar.horario}</td>
+                                    <td>#{claseAEditar.monitor}</td>
+                                    <td>#{claseAEditar.descripcion}</td>
+                                </tr>
+
+                            </table>
+                        </td>
+                        <td width="100px">
+                            <div width="100px">
+                                <p>INTRODUZCA TODOS LOS DATOS DE <b>#{claseAEditar.clase}</b> MODIFICANDO LOS QUE QUIERA </p>
+                                <form method="post" class="formLogin" action="/CeuFitSW1/modificarClases" align="center">
+                                    <input id="claseOriginal" name="claseOriginal" type="hidden" value="#{claseAEditar.clase}"/>
+                                    <input id="clase" name="clase" type="text" placeholder="clase"/>
+                                    <input id="horario" name="horario" type="text" placeholder="horario"/>
+                                    <input id="monitor" name="monitor" type="text" placeholder="monitor"/>
+                                    <input id="descripcion" name="descripcion" type="text" placeholder="descripcion"/>
+                                    <input id="Enviar" type="submit" value="VAMOS!"/>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

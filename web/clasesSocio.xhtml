@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./plantillas/templateVistaSocios.xhtml">
+
+            <ui:define name="top">
+
+            </ui:define>
+
+            <ui:define name="content">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <table class="tablasMostrarObjetos">
+                    <tr>
+                        <td>Clase</td>
+                        <td>Horario</td>
+                        <td>Monitor</td>
+                        <td>Apuntados</td>
+                    </tr>
+                    <ul>
+                        <c:forEach items="#{requestScope.TablaDeClases}" var="entry">
+                            <tr>
+                                <td>#{entry.clase}</td>
+                                <td>#{entry.horario}</td>
+                                <td>#{entry.monitor}</td>
+                                <td>#{entry.ocupacion}</td>
+                                <td> 
+                                    <form method="get" action="/CeuFitSW1/ApuntarseClase" name="clases">
+                                        <input id="id_horario" name="id_horario" type="hidden" value="#{entry.id_horario}"></input>
+                                        <button>Apúntame</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </ul>
+                </table>
+
+            </ui:define>
+
+            <ui:define name="bottom">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

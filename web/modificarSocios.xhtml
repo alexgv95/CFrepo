@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+     <body>
+        <ui:composition template="./plantillas/templateVistaAdmin.xhtml"
+                        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                        xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+            <ui:define name="top">
+            </ui:define>
+
+            <ui:define name="content">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                
+                <p> #{requestScope.modificarSocios}</p>
+                <table>
+                    <tr>
+                        <td>
+                <table class="tablasMostrarObjetos">
+                    <tr id="cabeceraTablaMostrarObjetos">
+                        <th>DNI</th>
+                        <th>TIPO</th>
+                        <th>NOMBRE</th>
+                        <th>APELLIDOS</th>
+                        <th>DIRECCION</th>
+                    </tr>
+                        <tr>
+                            <td>#{socio.dni}</td>
+                            <td>#{socio.tipo}</td>
+                            <td>#{socio.nombre}</td>
+                            <td>#{socio.apellidos}</td>
+                            <td>#{socio.direccion}</td>
+                        </tr>
+                </table>
+                        </td>
+                        <td width="100px">
+                            <div width="100px">
+                                <p>INTRODUZCA TODOS LOS DATOS DE #{socio.nombre} MODIFICANDO LOS QUE QUIERA </p>
+                                <form method="post" class="formLogin" action="/CeuFitSW1/modificarSocios" align="center">
+                                    <input type="hidden" name="DNIORIGINAL" value="#{socio.dni}" />
+                                    <input id="DNI" name="DNI" type="text" placeholder="DNI"/>
+                                    <input id="PASSWORD" name="PASSWORD" type="text" placeholder="PASSWORD"/>
+                                    <input id="TIPO" name="TIPO" type="text" placeholder="TIPO"/>
+                                    <input id="NOMBRE" name="NOMBRE" type="text" placeholder="NOMBRE"></input>
+                                    <input id="APELLIDOS" name="APELLIDOS" type="text" placeholder="APELLIDOS"></input>
+                                    <input id="DIRECCION" name="DIRECCION" type="text" placeholder="DIRECCION"></input>
+                                    <input id="Enviar" type="submit" value="Modificar"/>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="/css/estilo.css"/>
+        <title>CEU FIT - Tu gimnasio de confianza</title>
+    </h:head>
+    
+    <h:body>
+        <div id="top" class="top">
+            <nav id="menu">
+                <table>
+                    <tr>
+                        <td>
+                            <div id="logo">
+                                <h:form>
+                                    <h:commandLink action="inicio">
+                                        <img src="./resources/imagenes/Imagen1.png" width="60%" height="60%"></img>
+                                    </h:commandLink>
+                                </h:form>
+                            </div>
+                        </td>
+                        <td width="80%">
+                            <h:form>
+                                <div id="ulMenu" width="100%">
+                                    <ul>
+                                        <li class="liMenu"><h:commandLink action="inicio" styleClass="commandLinkStyle">Inicio</h:commandLink></li>
+                                        <li class="liMenu"><a href="/CeuFitSW1/mostrarClasesInicio" class="headerAdminSocio">Clases</a></li>
+                                        <li class="liMenu"><h:commandLink action="horarios" styleClass="commandLinkStyle">Horarios</h:commandLink></li>
+                                        <li class="liMenu"><h:commandLink action="instalaciones" styleClass="commandLinkStyle">Instalaciones</h:commandLink></li>
+                                        <li style="float:right" class="liMenu"><h:commandLink action="registro" styleClass="commandLinkStyle">Iniciar sesión</h:commandLink></li>
+                                    </ul> 
+                                </div>
+                            </h:form>
+                        </td>
+                    </tr>
+                </table>
+            </nav>
+            <ui:insert name="top"></ui:insert>
+        </div>
+
+        <div>
+            <div id="content" class="left_content">
+                <ui:insert name="content">Content</ui:insert>
+            </div>
+        </div>
+
+        <footer style="background-color: grey; width: 100%">
+            <table>
+                <tr>
+                    <td width="33%">
+                        <h3 align="center">Videos</h3>
+                        <iframe width="100%" height="430" src="https://www.youtube-nocookie.com/embed/W8NVtP2YSpw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    </td>
+                    <td width="33%">
+                        <h3 align="center">Contactanos</h3>
+                        <form method="get" id="formContact" action="/CeuFitSW1/ProcesarServletContacto" align="center" class="topBefore" style="width: 100%;">
+                            <input id="Nombre" name="Nombre" type="text" placeholder="NOMBRE"/>
+                            <input id="Email" name="Email" type="text" placeholder="E-MAIL"/>
+                            <textarea id="Mensaje" name="Mensaje" type="text" placeholder="En que podemos ayudarte?"></textarea>
+                            <input id="Enviar" type="submit" value="VAMOS!"/>
+                        </form>
+                    </td>
+                    <td width="33%">
+                        <h3 align="center">Donde Estamos</h3>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12154.290534656313!2d-3.8465994!3d40.3961635!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6de56e60c5e74d78!2sVita%2010%20SportClub!5e0!3m2!1ses!2ses!4v1572972193893!5m2!1ses!2ses" height="430" width="100%" frameborder="0" style="border:0;" ></iframe>
+                    </td>
+                </tr>
+            </table>
+        </footer>
+    </h:body>
+</html>
