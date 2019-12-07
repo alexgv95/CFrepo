@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import login.Usuarios;
+import maquinas.Maquina;
 
 /**
  *
@@ -59,9 +61,10 @@ public class DBManager {
 
     }
 
-    public ArrayList verClasesParaApuntarse(String id_usuario) throws NamingException, SQLException {
+    public ArrayList verClasesParaApuntarse(Integer id_usuario) throws NamingException, SQLException {
 
-        String query = "SELECT CLASE, HORARIO, MONITOR, ID_HORARIO FROM HORARIOS WHERE (ID_HORARIO NOT IN (SELECT ID_HORARIO FROM APUNTADOS WHERE (ID_USUARIO=' " + id_usuario + "')));";
+        String query = "SELECT CLASE, HORARIO, MONITOR, ID_HORARIO FROM horarios WHERE (ID_HORARIO NOT IN (SELECT ID_HORARIO FROM apuntados WHERE (ID_USUARIO=' " + id_usuario + "')));";
+        System.out.println(query);
         ArrayList arrayClases = new ArrayList();
         Statement st = null;
         ResultSet rs = null;
@@ -91,9 +94,9 @@ public class DBManager {
         return arrayClases;
     }
 
-    public void apuntarseAClase(String id_usuario, String id_horario) throws NamingException {
+    public void apuntarseAClase(Integer id_usuario, String id_horario) throws NamingException {
 
-        String query = "INSERT INTO APUNTADOS(ID_USUARIO, ID_HORARIO) VALUE('" + id_usuario + "', '" + id_horario + "');";
+        String query = "INSERT INTO apuntados(ID_USUARIO, ID_HORARIO) VALUE('" + id_usuario + "', '" + id_horario + "');";
         Statement st = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -110,10 +113,10 @@ public class DBManager {
 
     }
 
-    public ArrayList mostrarMisClases(String id_usuario) {
+    public ArrayList mostrarMisClases(Integer id_usuario) {
 
-        String query1 = "SELECT CLASE, HORARIO, MONITOR FROM HORARIOS WHERE "
-                + "(ID_HORARIO IN (SELECT ID_HORARIO FROM APUNTADOS WHERE (ID_USUARIO='" + id_usuario + "')));";
+        String query1 = "SELECT CLASE, HORARIO, MONITOR FROM horarios WHERE "
+                + "(ID_HORARIO IN (SELECT ID_HORARIO FROM apuntados WHERE (ID_USUARIO='" + id_usuario + "')));";
         ArrayList misClases = new ArrayList();
         Statement st = null;
         ResultSet rs = null;
@@ -139,10 +142,10 @@ public class DBManager {
         return misClases;
     }
 
-    public ArrayList mostrarClasesSinRepetir(String id_usuario) {
+    public ArrayList mostrarClasesSinRepetir(Integer id_usuario) {
 
-        String query1 = "SELECT DISTINCT CLASE FROM HORARIOS WHERE "
-                + "(ID_HORARIO IN (SELECT ID_HORARIO FROM APUNTADOS WHERE (ID_USUARIO='" + id_usuario + "')));";
+        String query1 = "SELECT DISTINCT CLASE FROM horarios WHERE "
+                + "(ID_HORARIO IN (SELECT ID_HORARIO FROM apuntados WHERE (ID_USUARIO='" + id_usuario + "')));";
         ArrayList misClases = new ArrayList();
         Statement st = null;
         ResultSet rs = null;
@@ -167,7 +170,7 @@ public class DBManager {
 
     public ArrayList mostrarClases() {
 
-        String query1 = "SELECT CLASE FROM CLASES";
+        String query1 = "SELECT CLASE FROM clases";
         ArrayList clases = new ArrayList();
         Statement st = null;
         ResultSet rs = null;
@@ -191,7 +194,7 @@ public class DBManager {
 
     public String mostrarDescripcion(String clase) {
 
-        String query1 = "select DESCRIPCION from CLASES where (CLASE ='" + clase + "');";
+        String query1 = "select DESCRIPCION from clases where (CLASE ='" + clase + "');";
         String descripcion = null;
         Statement st = null;
         ResultSet rs = null;
@@ -210,7 +213,7 @@ public class DBManager {
 
     public ArrayList mostrarComentarios(String clase) {
 
-        String query1 = "select COMENTARIO from COMENTARIOS where (CLASE ='" + clase + "');";
+        String query1 = "select COMENTARIO from comentarios where (CLASE ='" + clase + "');";
         ArrayList comentarios = new ArrayList();
         Statement st = null;
         ResultSet rs = null;
@@ -235,7 +238,7 @@ public class DBManager {
     public int ocupacionClases(String clase) {
 
         int ocupacion = 0;
-        String query = "SELECT COUNT(ID_HORARIO) FROM APUNTADOS WHERE (ID_USUARIO IN (SELECT ID_USUARIO FROM HORARIOS WHERE (CLASE = '" + clase + "')));";
+        String query = "SELECT COUNT(ID_HORARIO) FROM apuntados WHERE (ID_HORARIO IN (SELECT ID_HORARIO FROM horarios WHERE (CLASE = '" + clase + "')));";
         Statement st = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -252,6 +255,118 @@ public class DBManager {
             this.desconectar(conn, rs, st);
         }
         return ocupacion;
+    }
+
+    public ArrayList mostrarMaquinas() {
+
+        String query1 = "SELECT MAQUINA, CANTIDAD FROM maquinas";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        ArrayList maquinasList = new ArrayList();
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            rs = st.executeQuery(query1);
+            while (rs.next()) {
+                Maquina maquinas = new Maquina();
+                maquinas.setMaquina(rs.getString("MAQUINA"));
+                maquinas.setCantidad(rs.getInt("CANTIDAD"));
+                maquinasList.add(maquinas);
+            }
+
+        } catch (NamingException | SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+        return maquinasList;
+
+    }
+
+    public void annadirMaquina(String maquina, int cantidad) {
+
+        String query = "INSERT INTO maquinas(MAQUINA, CANTIDAD) VALUE('" + maquina + "', '" + cantidad + "');";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+
+    }
+
+    public void borrarMaquina(String maquina) {
+
+        String query = "DELETE FROM maquinas WHERE MAQUINA='" + maquina + "';";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+
+    }
+
+    public void modificarMaquina(String maquina, int cantidad) {
+
+        String query = "UPDATE maquinas SET CANTIDAD='" + cantidad + "'WHERE (MAQUINA ='" + maquina + "');";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+
+    }
+
+    public Usuarios usuario(String dni) throws NamingException, SQLException {
+
+        String query = "SELECT TIPO, PASSWORD, ID_USUARIO FROM usuarios WHERE (DNI='" + dni + "');";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        Usuarios usuario = new Usuarios();
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            rs.next();
+//            usuario.setDni(rs.getString("DNI"));
+                usuario.setId_usuario(rs.getInt("ID_USUARIO"));
+                usuario.setPassword(rs.getString("PASSWORD"));
+                usuario.setTipo(rs.getString("TIPO"));
+          
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE,
+                    "Falló la consulta", ex);
+        } finally {
+
+            this.desconectar(conn, rs, st);
+        }
+        return usuario;
     }
 
 }

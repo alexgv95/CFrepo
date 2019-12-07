@@ -3,31 +3,45 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clases;
+package maquinas;
 
 import dataBase.DBManager;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author enrique
  */
-public class mostrarClasesDelHorario extends HttpServlet {
-
-//    DataSource datasource;
+public class MostrarMaquinas extends HttpServlet {
+    
     DBManager db = new DBManager();
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ServletContext contexto = request.getServletContext();
+        ArrayList maquinas = db.mostrarMaquinas();
+        request.setAttribute("maquinas", maquinas);
+
+        RequestDispatcher mostrarDescripcion = contexto.getRequestDispatcher("/maquinasAdmin.xhtml");
+        mostrarDescripcion.forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -38,22 +52,11 @@ public class mostrarClasesDelHorario extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
 
-        try {
-            ServletContext contexto = request.getServletContext();
-            HttpSession sesion = request.getSession();
-            Integer id_usuario =  (Integer) sesion.getAttribute("id_usuario");
-            ArrayList arrayClases = db.verClasesParaApuntarse(id_usuario);
-            request.setAttribute("TablaDeClases", arrayClases);
-            RequestDispatcher rd = contexto.getRequestDispatcher("/clasesSocio.xhtml");
-            rd.forward(request, response);
-        } catch (SQLException | NamingException ex) {
-            Logger.getLogger(mostrarClasesDelHorario.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**
@@ -62,15 +65,12 @@ public class mostrarClasesDelHorario extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs EN EL MÉTODO DOPOST, VA A
-     * COGER EL ID_CLASE Y SE LO VA A ASIGNAR A UN USUARIO DE UNA TABLA
-     * ID_USUARIO-ID_CLASE. PARA SABER EL USUARIO, TIENE QUE GUARDAR LA SESIÓN Y
-     * EL ID_USUARIO SERÁ UN ATRIBUTO DE LA SESIÓN.
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

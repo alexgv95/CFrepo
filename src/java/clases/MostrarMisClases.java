@@ -30,7 +30,7 @@ public class MostrarMisClases extends HttpServlet {
 
         ServletContext contexto = request.getServletContext();
         HttpSession sesion = request.getSession();
-        String id_usuario = (String) sesion.getAttribute("id_usuario");
+        Integer id_usuario = (Integer) sesion.getAttribute("id_usuario");
 
         ArrayList misClases = db.mostrarMisClases(id_usuario);
         request.setAttribute("MisClases", misClases);
@@ -54,6 +54,7 @@ public class MostrarMisClases extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        doGet(request, response);
     }
 
     /**

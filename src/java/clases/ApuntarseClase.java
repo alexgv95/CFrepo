@@ -39,7 +39,7 @@ public class ApuntarseClase extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession sesion = request.getSession();
-        String id_usuario = (String) sesion.getAttribute("id_usuario");
+        Integer id_usuario = (Integer) sesion.getAttribute("id_usuario");
         String id_horario = request.getParameter("id_horario");
         ServletContext contexto = request.getServletContext();
         try {

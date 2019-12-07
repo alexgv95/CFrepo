@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./plantillas/templateVistaAdmin.xhtml">
+
+            <ui:define name="top">
+
+            </ui:define>
+
+            <ui:define name="left">
+
+            </ui:define>
+
+            <ui:define name="right">
+
+            </ui:define>
+
+            <ui:define name="content">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+                <table>
+                    <tr>
+                        <td>
+                            <table class="tablasMostrarObjetos">
+                                <tr id="cabeceraTablaMostrarObjetos">
+                                    <th>MAQUINA</th>
+                                    <th>CANTIDAD</th>
+                                </tr>
+                                <c:forEach items="#{requestScope.maquinas}" var="entry">
+                                    <tr>
+                                        <td>#{entry.maquina}</td>
+                                        <td>#{entry.cantidad}</td>
+                                        <td>
+                                            <table id="botonesTabla">
+                                                <tr>
+                                                    <td>
+                                                        <form action="/CeuFitSW1/ModificarMaquina" method="get">
+                                                            <input type="hidden" name="maquina" value="#{entry.maquina}"/>
+                                                            <input type="hidden" name="cantidad" value="#{entry.cantidad}"/>
+                                                            <input type="submit" value="MODIFICAR"/>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <form action="/CeuFitSW1/BorrarMaquina" method="post">
+                                                            <input type="hidden" name="MAQUINA" value="#{entry.maquina}"/>
+                                                            <input type="submit" value="BORRAR"/>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </td>
+                        <td width="100px">
+                            <div width="100px">
+                                <form method="get" class="formLogin" action="/CeuFitSW1/AnadirMaquina" align="center">
+                                    <input id="MAQUINA" name="MAQUINA" type="text" placeholder="MAQUINA"/>
+                                    <input id="CANTIDAD" name="CANTIDAD" type="int" placeholder="CANTIDAD"/>
+                                    <input id="Enviar" type="submit" value="VAMOS!"/>
+
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </ui:define>
+
+            <ui:define name="bottom">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

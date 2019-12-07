@@ -22,20 +22,48 @@
         <servlet-class>comentarios.IntroducirComentario</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>MostrarMisClases</servlet-name>
-        <servlet-class>clases.MostrarMisClases</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>mostrarClasesDelHorario</servlet-name>
         <servlet-class>clases.mostrarClasesDelHorario</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ProcesarServletFacelets</servlet-name>
-        <servlet-class>login.ProcesarServletFacelets</servlet-class>
+        <servlet-name>ProcesarUsuario</servlet-name>
+        <servlet-class>login.ProcesarUsuario</servlet-class>
+        <init-param>
+            <param-name>rutaError</param-name>
+            <param-value>/registro.xhtml</param-value>
+        </init-param>
     </servlet>
+    <context-param>
+        <param-name>rutaSocio</param-name>
+        <param-value>/InformacionPerfilSocio</param-value>
+    </context-param>
+    <context-param>
+        <param-name>rutaAdmin</param-name>
+        <param-value>/mostrarSocios</param-value>
+    </context-param>
     <servlet>
         <servlet-name>ProcesarServletContacto</servlet-name>
         <servlet-class>formulario.ProcesarServletContacto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MostrarMisClases</servlet-name>
+        <servlet-class>clases.MostrarMisClases</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>mostrarSocios</servlet-name>
+        <servlet-class>socios.mostrarSocios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>anadirSocios</servlet-name>
+        <servlet-class>socios.anadirClases</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>borrarSocios</servlet-name>
+        <servlet-class>socios.borrarSocios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>modificarSocios</servlet-name>
+        <servlet-class>socios.modificarSocios</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>InformacionPerfilSocio</servlet-name>
@@ -48,10 +76,6 @@
     <servlet>
         <servlet-name>EliminarClase</servlet-name>
         <servlet-class>clases.EliminarClase</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>BotonesClases</servlet-name>
-        <servlet-class>clases.BotonesClases</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AnadirMonitor</servlet-name>
@@ -94,20 +118,20 @@
         <servlet-class>formulario.mostrarFormularioContacto</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>mostrarSocios</servlet-name>
-        <servlet-class>socios.mostrarSocios</servlet-class>
+        <servlet-name>MostrarMaquinas</servlet-name>
+        <servlet-class>maquinas.MostrarMaquinas</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>borrarSocios</servlet-name>
-        <servlet-class>socios.borrarSocios</servlet-class>
+        <servlet-name>AnadirMaquina</servlet-name>
+        <servlet-class>maquinas.AnadirMaquina</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>anadirSocios</servlet-name>
-        <servlet-class>socios.anadirSocios</servlet-class>
+        <servlet-name>BorrarMaquina</servlet-name>
+        <servlet-class>maquinas.BorrarMaquina</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>modificarSocios</servlet-name>
-        <servlet-class>socios.modificarSocios</servlet-class>
+        <servlet-name>ModificarMaquina</servlet-name>
+        <servlet-class>maquinas.ModificarMaquina</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
@@ -138,24 +162,32 @@
         <url-pattern>/ProcesarServletContacto</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProcesarServletFacelets</servlet-name>
-        <url-pattern>/ProcesarServletFacelets</url-pattern>
+        <servlet-name>ProcesarUsuario</servlet-name>
+        <url-pattern>/ProcesarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>mostrarSocios</servlet-name>
+        <url-pattern>/mostrarSocios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>anadirSocios</servlet-name>
+        <url-pattern>/anadirSocios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>borrarSocios</servlet-name>
+        <url-pattern>/borrarSocios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modificarSocios</servlet-name>
+        <url-pattern>/modificarSocios</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManejadorClases</servlet-name>
         <url-pattern>/ManejadorClases</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>MostrarMisClases</servlet-name>
-        <url-pattern>/MostrarMisClases</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>EliminarClase</servlet-name>
         <url-pattern>/EliminarClase</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>BotonesClases</servlet-name>
-        <url-pattern>/BotonesClases</url-pattern>
     </servlet-mapping>
     <listener>
         <listener-class>
@@ -211,20 +243,24 @@
         <url-pattern>/mostrarClasesInicio</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>mostrarSocios</servlet-name>
-        <url-pattern>/mostrarSocios</url-pattern>
+        <servlet-name>MostrarMaquinas</servlet-name>
+        <url-pattern>/MostrarMaquinas</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>borrarSocios</servlet-name>
-        <url-pattern>/borrarSocios</url-pattern>
+        <servlet-name>AnadirMaquina</servlet-name>
+        <url-pattern>/AnadirMaquina</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>anadirSocios</servlet-name>
-        <url-pattern>/anadirSocios</url-pattern>
+        <servlet-name>BorrarMaquina</servlet-name>
+        <url-pattern>/BorrarMaquina</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>modificarSocios</servlet-name>
-        <url-pattern>/modificarSocios</url-pattern>
+        <servlet-name>ModificarMaquina</servlet-name>
+        <url-pattern>/ModificarMaquina</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MostrarMisClases</servlet-name>
+        <url-pattern>/MostrarMisClases</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

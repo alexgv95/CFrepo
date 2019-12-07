@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clases;
+package maquinas;
 
 import dataBase.DBManager;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author enrique
  */
-public class BotonesClases extends HttpServlet {
-
+public class ModificarMaquina extends HttpServlet {
+    
     DBManager db = new DBManager();
 
     /**
@@ -34,16 +34,22 @@ public class BotonesClases extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ServletContext contexto = request.getServletContext();
-        ArrayList clases = db.mostrarClases();
-        request.setAttribute("clases", clases);
-        RequestDispatcher mostrarDescripcion = contexto.getRequestDispatcher("/clases.xhtml");
-        mostrarDescripcion.forward(request, response);
-
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ModificarMaquina</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ModificarMaquina at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -55,7 +61,20 @@ public class BotonesClases extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            ServletContext contexto = request.getServletContext();
+            String maquina = request.getParameter("maquina");
+            int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+
+            
+            Maquina maquinas = new Maquina();
+            maquinas.setCantidad(cantidad);
+            maquinas.setMaquina(maquina);
+            
+            request.setAttribute("maquina", maquinas);
+           
+
+            RequestDispatcher mostrarClases = contexto.getRequestDispatcher("/modificarMaquina.xhtml");
+            mostrarClases.forward(request, response);  
     }
 
     /**
@@ -69,7 +88,13 @@ public class BotonesClases extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        ServletContext contexto = request.getServletContext();
+        String maquina = request.getParameter("MAQUINA");
+        int cantidad = Integer.parseInt(request.getParameter("CANTIDAD"));
+        db.modificarMaquina(maquina, cantidad);
+
+        RequestDispatcher mostrarDescripcion = contexto.getRequestDispatcher("/MostrarMaquinas");
+        mostrarDescripcion.forward(request, response);
     }
 
     /**
