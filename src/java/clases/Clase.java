@@ -21,20 +21,20 @@ public class Clase {
     ArrayList<Comentario> comentarios;
 
 
-    public Clase(String clase, String descripcion, String horario, String monitor, ArrayList<Comentario> comentarios) {
-        this.clase = clase;
-        this.descripcion = descripcion;
-        this.horario = horario;
-        this.monitor = monitor;
-        this.comentarios = comentarios;
-    }
-
-    public Clase(String clase, String descripcion, String horario, String monitor) {
-        this.clase = clase;
-        this.descripcion = descripcion;
-        this.horario = horario;
-        this.monitor = monitor;
-    }
+//    public Clase(String clase, String descripcion, String horario, String monitor, ArrayList<Comentario> comentarios) {
+//        this.clase = clase;
+//        this.descripcion = descripcion;
+//        this.horario = horario;
+//        this.monitor = monitor;
+//        this.comentarios = comentarios;
+//    }
+//
+//    public Clase(String clase, String descripcion, String horario, String monitor) {
+//        this.clase = clase;
+//        this.descripcion = descripcion;
+//        this.horario = horario;
+//        this.monitor = monitor;
+//    }
     
 
     public String getClase() {

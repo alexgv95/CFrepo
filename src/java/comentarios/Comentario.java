@@ -13,10 +13,10 @@ public class Comentario {
     int valoracion;
     String comentario;
 
-    public Comentario(int valoracion, String comentario) {
-        this.valoracion = valoracion;
-        this.comentario = comentario;
-    }
+//    public Comentario(int valoracion, String comentario) {
+//        this.valoracion = valoracion;
+//        this.comentario = comentario;
+//    }
 
     public int getValoracion() {
         return valoracion;

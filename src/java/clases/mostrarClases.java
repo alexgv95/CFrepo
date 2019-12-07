@@ -5,16 +5,12 @@
  */
 package clases;
 
+import dataBase.DBManager;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -22,7 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 /**
  *
@@ -39,36 +34,9 @@ public class mostrarClases extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DataSource datasource;
+    DBManager db = new DBManager();
 
-    @Override
-    public void init() throws ServletException {
-        try {
-            InitialContext initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(mostrarClases.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet mostrarClases</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet mostrarClases at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -110,23 +78,9 @@ public class mostrarClases extends HttpServlet {
     }// </editor-fold>
 
     private void listarClases(HttpServletRequest request, HttpServletResponse response) {
-        ArrayList<Clase> clases = new ArrayList<>();
         ServletContext contexto = request.getServletContext();
-        String query = "SELECT * FROM CLASES";
-        ResultSet resultSet = null;
-        Connection connection = null;
-        Statement statement = null;
         try {
-            InitialContext initialContext = new InitialContext();
-            connection = datasource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                Clase clase = new Clase(resultSet.getString("clase"), resultSet.getString("descripcion"),
-                        resultSet.getString("horario"), resultSet.getString("monitor"));
-                clases.add(clase);
-            }
+            ArrayList clases = db.clasesInicio();
             request.setAttribute("ArrayClases", clases);
             RequestDispatcher volverAMenu = contexto.getRequestDispatcher("/clasesAdmin.xhtml");
             volverAMenu.forward(request, response);
