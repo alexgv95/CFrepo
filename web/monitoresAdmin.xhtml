@@ -44,7 +44,7 @@ and open the template in the editor.
                                             <table id="botonesTabla">
                                                 <tr>
                                                     <td>
-                                                        <form action="/CF/modificarMonitores" method="get">
+                                                        <form action="/CFrepo/modificarMonitores" method="get">
                                                             <input type="hidden" name="dni" value="#{monitor.dni}"/>
                                                             <input type="hidden" name="nombreCompleto" value="#{monitor.nombreCompleto}"/>
                                                             <input type="hidden" name="email" value="#{monitor.email}"/>
@@ -54,7 +54,7 @@ and open the template in the editor.
                                                         </form>
                                                     </td>
                                                     <td>
-                                                        <form action="/CF/borrarMonitores" method="post">
+                                                        <form action="/CFrepo/borrarMonitores" method="post">
                                                             <input type="hidden" name="dni" value="#{monitor.dni}"/>
                                                             <input type="submit" value="BORRAR"/>
                                                         </form>
@@ -68,7 +68,7 @@ and open the template in the editor.
                         </td>
                         <td width="100px">
                             <div width="100px">
-                                <form method="get" class="formLogin" action="/CF/AnadirMonitor" align="center">
+                                <form method="get" class="formLogin" action="/CFrepo/AnadirMonitor" align="center">
                                     <input id="DNI" name="DNI" type="text" placeholder="DNI"/>
                                     <input id="NombreCompleto" name="NombreCompleto" type="text" placeholder="NOMBRE Y APELLIDOS"/>
                                     <input id="Email" name="Email" type="text" placeholder="E-MAIL"/>

@@ -41,7 +41,7 @@ and open the template in the editor.
 
                 <h>Danos tu opinión sobre las clases a las que has asistido</h>
 
-                <form  method="post" action="/CF/MostrarMisClases" id="formLogin" name="datos">
+                <form  method="post" action="/CFrepo/MostrarMisClases" id="formLogin" name="datos">
                     <select name="tablasMostrarObjetos">
                         <c:forEach items="#{requestScope.MisClases}" var="entry">
                             <option value="#{entry.clase}">#{entry.clase}</option>
