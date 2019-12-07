@@ -44,7 +44,7 @@ and open the template in the editor.
                                             <table id="botonesTabla">
                                                 <tr>
                                                     <td>
-                                                        <form action="/CeuFitSW1/modificarSocios" method="get">
+                                                        <form action="/CF/modificarSocios" method="get">
                                                             <input type="hidden" name="DNI" value="#{soc.dni}"/>
                                                             <input type="hidden" name="PASSWORD" value="#{soc.password}"/>
                                                             <input type="hidden" name="TIPO" value="#{soc.tipo}"/>
@@ -55,7 +55,7 @@ and open the template in the editor.
                                                         </form>
                                                     </td>
                                                     <td>
-                                                        <form action="/CeuFitSW1/borrarSocios" method="post">
+                                                        <form action="/CF/borrarSocios" method="post">
                                                             <input type="hidden" name="dni" value="#{soc.dni}"/>
                                                             <input type="submit" value="BORRAR"/>
                                                         </form>
@@ -69,7 +69,7 @@ and open the template in the editor.
                         </td>
                         <td width="100px">
                             <div width="100px">
-                                <form method="get" class="formLogin" action="/CeuFitSW1/anadirSocios" align="center">
+                                <form method="get" class="formLogin" action="/CF/anadirSocios" align="center">
                                     <input id="DNI" name="DNI" type="text" placeholder="DNI"/>
                                     <input id="Password" name="PASSWORD" type="text" placeholder="PASSWORD"/>
                                     <input id="Tipo" name="TIPO" type="text" placeholder="Tipo"/>

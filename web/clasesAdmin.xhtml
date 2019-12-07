@@ -43,7 +43,7 @@ and open the template in the editor.
                                             <table id="botonesTabla">
                                                 <tr>
                                                     <td>
-                                                        <form action="/CeuFitSW1/modificarClases" method="get">
+                                                        <form action="/CF/modificarClases" method="get">
                                                             <input type="hidden" name="clase" value="#{clase.clase}"/>
                                                             <input type="hidden" name="horario" value="#{clase.horario}"/>
                                                             <input type="hidden" name="monitor" value="#{clase.monitor}"/>
@@ -52,7 +52,7 @@ and open the template in the editor.
                                                         </form>
                                                     </td>
                                                     <td>
-                                                        <form action="/CeuFitSW1/borrarClases" method="post">
+                                                        <form action="/CF/borrarClases" method="post">
                                                             <input type="hidden" name="clase" value="#{clase.clase}"/>
                                                             <input type="submit" value="BORRAR"/>
                                                         </form>
@@ -66,7 +66,7 @@ and open the template in the editor.
                         </td>
                         <td width="100px">
                             <div width="100px">
-                                <form method="post" class="formLogin" action="/CeuFitSW1/anhadirClases" align="center">
+                                <form method="post" class="formLogin" action="/CF/anhadirClases" align="center">
                                     <input id="clase" name="clase" type="text" placeholder="Nombre de la clase"/>
                                     <input id="horario" name="horario" type="text" placeholder="Horario"/>
                                     <input id="monitor" name="monitor" type="text" placeholder="Monitor"/>
