@@ -67,23 +67,6 @@ public class MostrarMisClases extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-//    @Override
-//    public void destroy() {
-//        try {
-//            statement.close();
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(mostrarInformacion.class
-//                    .getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                connection.close();
-//
-//            } catch (SQLException ex) {
-//                Logger.getLogger(mostrarInformacion.class
-//                        .getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
+
 
 }

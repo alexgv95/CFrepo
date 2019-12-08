@@ -19,6 +19,7 @@ public class Clase {
     String horario;
     String monitor;
     ArrayList<Comentario> comentarios;
+    private Integer id_clase;
 
 
 //    public Clase(String clase, String descripcion, String horario, String monitor, ArrayList<Comentario> comentarios) {
@@ -80,6 +81,20 @@ public class Clase {
     @Override
     public String toString() {
         return "Clase{" + "clase=" + clase + ", descripcion=" + descripcion + ", horario=" + horario + ", monitor=" + monitor + ", comentarios=" + comentarios + '}';
+    }
+
+    /**
+     * @return the id_clase
+     */
+    public Integer getId_clase() {
+        return id_clase;
+    }
+
+    /**
+     * @param id_clase the id_clase to set
+     */
+    public void setId_clase(Integer id_clase) {
+        this.id_clase = id_clase;
     }
 
  

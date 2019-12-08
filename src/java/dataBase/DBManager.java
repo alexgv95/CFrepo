@@ -479,8 +479,8 @@ public class DBManager {
         }
         return horario;
     }
-    
-        public String monitorClase(String clase) throws NamingException, SQLException {
+
+    public String monitorClase(String clase) throws NamingException, SQLException {
 
         String query = "select MONITOR from horarios where (CLASE ='" + clase + "');";
         Statement st = null;
@@ -503,4 +503,28 @@ public class DBManager {
         }
         return monitor;
     }
+
+    public void insertarComentario(String clase, String comentario, String valoracion) {
+
+        String query = "INSERT INTO comentarios(CLASE, COMENTARIO, VALORACION) VALUE('" + clase
+                + "','" + comentario + "','" + valoracion + "');";
+        System.out.println(query);
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            this.desconectar(conn, rs, st);
+    }
+}
+
+//        "UPDATE clases SET DESCRIPCION='" + descripcion + "' WHERE (CLASE='" + claseOriginal + "');";
+//        "UPDATE horarios SET CLASE='" + claseNueva + "', " + "MONITOR='" + monitor + "'," + "HORARIO='" + horario + "' WHERE (ID_HORARIO='" + claseOriginal + "');";
 }

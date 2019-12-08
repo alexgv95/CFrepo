@@ -5,23 +5,14 @@
  */
 package comentarios;
 
-import clases.mostrarInformacion;
+import dataBase.DBManager;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 
 /**
  *
@@ -29,63 +20,20 @@ import javax.sql.DataSource;
  */
 public class IntroducirComentario extends HttpServlet {
 
-    DataSource datasource;
-
-    @Override
-    public void init() throws ServletException {
-
-        try {
-            InitialContext initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+    DBManager db = new DBManager();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession sesion = request.getSession();
+
+        ServletContext contexto = request.getServletContext();
         String valoracion = request.getParameter("valoracion");
         String clase = request.getParameter("clase");
         String comentario = request.getParameter("comentario");
-        ServletContext contexto = request.getServletContext();
-        String query = "INSERT INTO COMENTARIOS(VALORACION, CLASE, COMENTARIO) "
-                + "VALUES(" + valoracion + ", '" + clase
-                + "', '" + comentario + "');";
-        System.out.println(query);
-        Statement statement = null;
-        Connection connection = null;
-        try {
-            connection = datasource.getConnection();
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
-            request.setAttribute("ComentarioEnviado", "Comentario enviado con éxito");
-            RequestDispatcher rd = contexto.getRequestDispatcher("/mostrarClasesDelHorario");
-            rd.forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE,
-                    "Falló la consulta", ex);
-        } finally {
+        db.insertarComentario(clase, comentario, valoracion);
+        request.setAttribute("ComentarioEnviado", "Comentario enviado con éxito");
+        RequestDispatcher rd = contexto.getRequestDispatcher("/MostrarMisClases");
+        rd.forward(request, response);
 
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

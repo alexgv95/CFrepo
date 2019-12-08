@@ -5,6 +5,7 @@
 // */
 //package clases;
 //
+//import dataBase.DBManager;
 //import java.io.IOException;
 //import java.io.PrintWriter;
 //import java.sql.Connection;
@@ -29,22 +30,8 @@
 // */
 //public class modificarClases extends HttpServlet {
 //
-//    DataSource datasource;
+//    DBManager db = new DBManager();
 //
-//    
-//    @Override
-//    public void init() throws ServletException {
-//
-//        try {
-//            InitialContext initialContext = new InitialContext();
-//            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-//            Connection connection = datasource.getConnection();
-//            Statement createStatement = connection.createStatement();
-//            System.out.println("Habemus Conexion!!");
-//        } catch (NamingException | SQLException ex) {
-//            Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 //    /**
 //     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 //     * methods.
@@ -85,12 +72,11 @@
 //            throws ServletException, IOException {
 //        ServletContext contexto = request.getServletContext();
 //
-//        String clase = request.getParameter("clase");
-//        String horario = request.getParameter("horario");
-//        String monitor = request.getParameter("monitor");
-//        String descripcion = request.getParameter("descripcion");
-//
-//        Clase claseAEditar = new Clase(clase, descripcion, horario, monitor);
+//        Clase claseAEditar = new Clase();
+//        claseAEditar.setClase(request.getParameter("clase"));
+//        claseAEditar.setDescripcion(request.getParameter("descripcion"));
+//        claseAEditar.setHorario(request.getParameter("horario"));
+//        claseAEditar.setMonitor(request.getParameter("monitor"));
 //        request.setAttribute("claseAEditar", claseAEditar);
 //
 //        RequestDispatcher volverAEditar
@@ -113,35 +99,31 @@
 //        response.setContentType("text/html;charset=UTF-8");
 //        ServletContext context = request.getServletContext();
 //
-//        Connection connection = null;
-//        Statement statement = null;
-//        try {
-//            String claseOriginal = request.getParameter("claseOriginal");
-//            String claseNueva = request.getParameter("clase");
-//            String horario = request.getParameter("horario");
-//            String monitor = request.getParameter("monitor");
-//            String descripcion = request.getParameter("descripcion");
-//            System.out.println(claseOriginal);
-//            System.out.println(claseNueva);
-//            System.out.println(horario);
-//            System.out.println(monitor);
-//            System.out.println(claseOriginal);
+//        String claseOriginal = request.getParameter("claseOriginal");
+//        String claseNueva = request.getParameter("clase");
+//        String horario = request.getParameter("horario");
+//        String monitor = request.getParameter("monitor");
+//        String descripcion = request.getParameter("descripcion");
+//        String id_horario = request.getParameter("id_horario");
+////            System.out.println(claseOriginal);
+////            System.out.println(claseNueva);
+////            System.out.println(horario);
+////            System.out.println(monitor);
+////            System.out.println(claseOriginal);
 //
-//            String query = "UPDATE CLASES SET CLASE='" + claseNueva + "', "
-//                    + "HORARIO='" + horario + "', MONITOR='" + monitor + "', "
-//                    + "DESCRIPCION='" + descripcion + "' WHERE CLASE='" + claseOriginal + "';";
-//            System.out.println(query);
-//            Connection conn = datasource.getConnection();
-//            Statement stmt = conn.createStatement();
-//            stmt.executeUpdate(query);
+//        String query = "UPDATE CLASES SET CLASE='" + claseNueva + "', "
+//                + "HORARIO='" + horario + "', MONITOR='" + monitor + "', "
+//                + "DESCRIPCION='" + descripcion + "' WHERE CLASE='" + claseOriginal + "';";
+////        "UPDATE clases SET DESCRIPCION='" + descripcion + "' WHERE (CLASE='" + claseOriginal + "');";
+////        "UPDATE horarios SET CLASE='" + claseNueva + "', " + "MONITOR='" + monitor + "'," + "HORARIO='" + horario + "' WHERE (ID_HORARIO='" + claseOriginal + "');";
 //
-//            RequestDispatcher paginaInicio
-//                    = context.getRequestDispatcher("/mostrarClases");
-//            paginaInicio.forward(request, response);
+//        System.out.println(query);
 //
-//        } catch (SQLException ex) {
-//            Logger.getLogger(muestraMonitores.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+//        RequestDispatcher paginaInicio
+//                = context.getRequestDispatcher("/mostrarClases");
+//
+//        paginaInicio.forward(request, response);
+//
 //    }
 //
 //    /**
