@@ -5,25 +5,15 @@
  */
 package monitores;
 
-import clases.mostrarInformacion;
+import dataBase.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 /**
  *
@@ -31,6 +21,8 @@ import javax.sql.DataSource;
  */
 public class AnadirMonitor extends HttpServlet {
 
+    DBManager db = new DBManager();
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,21 +32,7 @@ public class AnadirMonitor extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DataSource datasource;
 
-    @Override
-    public void init() throws ServletException {
-
-        try {
-            InitialContext initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-            System.out.println("Habemus Conexion!!");
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -85,29 +63,16 @@ public class AnadirMonitor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            response.setContentType("text/html;charset=UTF-8");
-            ServletContext context = request.getServletContext();
-            int dni = Integer.parseInt(request.getParameter("DNI"));
-            String nombreCompleto = request.getParameter("NombreCompleto");
-            String email = request.getParameter("Email");
-            String numeroSS = request.getParameter("NumeroSS");
-            String telefono = request.getParameter("Telefono");
-            System.out.println("NOMBRE" + nombreCompleto);
-            String query = "INSERT INTO monitor VALUES(" + dni
-                    + ", '" + nombreCompleto + "', '" + email + "', '" + numeroSS
-                    + "', '" + telefono + "');";
-            System.out.println(query);
-            Connection conn = datasource.getConnection();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(query);
 
-            RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
-            pInici.forward(request, response);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(AnadirMonitor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ServletContext context = request.getServletContext();
+        int dni = Integer.parseInt(request.getParameter("DNI"));
+        String nombreCompleto = request.getParameter("NombreCompleto");
+        String email = request.getParameter("Email");
+        String numeroSS = request.getParameter("NumeroSS");
+        String telefono = request.getParameter("Telefono");
+        db.insertarMonitor(dni, nombreCompleto, email, numeroSS, telefono);
+        RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
+        pInici.forward(request, response);
 
     }
 

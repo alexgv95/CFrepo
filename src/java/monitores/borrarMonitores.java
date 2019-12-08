@@ -5,24 +5,14 @@
  */
 package monitores;
 
-import clases.mostrarInformacion;
+import dataBase.DBManager;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 /**
  *
@@ -30,7 +20,7 @@ import javax.sql.DataSource;
  */
 public class borrarMonitores extends HttpServlet {
 
-    DataSource datasource;
+    DBManager db = new DBManager();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,35 +31,13 @@ public class borrarMonitores extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    public void init() throws ServletException {
-
-        try {
-            InitialContext initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-            System.out.println("Habemus Conexion!!");
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet borrarMonitores</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet borrarMonitores at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        ServletContext context = request.getServletContext();
+        Integer dni = Integer.parseInt(request.getParameter("dni"));
+        db.borrarMonitor(dni);
+        RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
+        pInici.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -85,7 +53,7 @@ public class borrarMonitores extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-      //  processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -100,29 +68,7 @@ public class borrarMonitores extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = request.getServletContext();
-        String dni = request.getParameter("dni");
-        System.out.println("IMPREME" + dni);
-        String query = "DELETE FROM monitor where DNI='" + dni + "';";
-        ResultSet resultSet = null;
-        Connection connection = null;
-        Statement statement = null;
-        System.out.println(query);
-        try {
-            System.out.println(query);
-            connection = datasource.getConnection();
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
-            
-            RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
-            
-            pInici.forward(request, response);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(borrarMonitores.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        processRequest(request, response);
     }
 
     /**

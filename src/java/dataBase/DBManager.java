@@ -20,6 +20,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import login.Usuarios;
 import maquinas.Maquina;
+import monitores.Monitor;
 
 /**
  *
@@ -522,8 +523,97 @@ public class DBManager {
         } finally {
 
             this.desconectar(conn, rs, st);
+        }
     }
-}
+
+    public void insertarMonitor(Integer dni, String nombreCompleto, String email, String numeroSS, String telefono) {
+
+        String query = "INSERT INTO monitor VALUES(" + dni
+                + ", '" + nombreCompleto + "', '" + email + "', '" + numeroSS
+                + "', '" + telefono + "');";
+        System.out.println(query);
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            this.desconectar(conn, rs, st);
+        }
+    }
+
+    public void borrarMonitor(Integer dni) {
+
+        String query = "DELETE FROM monitor where (DNI='" + dni + "');";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+
+    }
+
+    public ArrayList mostrarMonitores() {
+
+        String query1 = "SELECT * FROM monitor";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        ArrayList monitores = new ArrayList();
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            rs = st.executeQuery(query1);
+            while (rs.next()) {
+                Monitor mon = new Monitor();
+                mon.setDni(rs.getInt("DNI"));
+                mon.setEmail(rs.getString("EMAIL"));
+                mon.setNombreCompleto(rs.getString("NOMBRE"));
+                mon.setNumeroSS(rs.getString("NUMEROSS"));
+                mon.setTelefono(rs.getString("TELEFONO"));
+                monitores.add(mon);
+            }
+
+        } catch (NamingException | SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+        return monitores;
+    }
+
+    public void modificarMonitor(String nombre, int dni, String email, String telefono, String numeroSS, int dniOriginal) {
+
+        String query = "UPDATE monitor SET DNI=" + dni + ", NOMBRE='" + nombre + "', EMAIL='" + email + "', TELEFONO='" + telefono + "', NUMEROSS='" + numeroSS + "' WHERE DNI=" + dniOriginal + ";";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+
+    }
 
 //        "UPDATE clases SET DESCRIPCION='" + descripcion + "' WHERE (CLASE='" + claseOriginal + "');";
 //        "UPDATE horarios SET CLASE='" + claseNueva + "', " + "MONITOR='" + monitor + "'," + "HORARIO='" + horario + "' WHERE (ID_HORARIO='" + claseOriginal + "');";

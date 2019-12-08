@@ -6,6 +6,7 @@
 package monitores;
 
 import clases.mostrarInformacion;
+import dataBase.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -30,6 +31,8 @@ import javax.sql.DataSource;
  */
 public class modificarMonitores extends HttpServlet {
 
+    DBManager db = new DBManager();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,22 +42,6 @@ public class modificarMonitores extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DataSource datasource;
-
-    @Override
-    public void init() throws ServletException {
-
-        try {
-            InitialContext initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-            System.out.println("Habemus Conexion!!");
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -84,22 +71,17 @@ public class modificarMonitores extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            ServletContext contexto = request.getServletContext();
-            String dni = request.getParameter("dni");
-            String nombre = request.getParameter("nombreCompleto");
-            String email = request.getParameter("email");
-            String numeroSS = request.getParameter("numeroSS");
-            String telefono = request.getParameter("telefono");
-            
-            Monitor monitor = new Monitor(Integer.parseInt(dni), nombre, email, telefono, numeroSS);
-            
-            request.setAttribute("monitor", monitor);
-           
+        ServletContext contexto = request.getServletContext();
+        Monitor mon = new Monitor();
+        mon.setDni(Integer.parseInt(request.getParameter("dni")));
+        mon.setNombreCompleto(request.getParameter("nombreCompleto"));
+        mon.setEmail(request.getParameter("email"));
+        mon.setNumeroSS(request.getParameter("numeroSS"));
+        mon.setTelefono(request.getParameter("telefono"));
+        request.setAttribute("monitor", mon);
+        RequestDispatcher mostrarClases = contexto.getRequestDispatcher("/modificarMonitor.xhtml");
+        mostrarClases.forward(request, response);
 
-            RequestDispatcher mostrarClases = contexto.getRequestDispatcher("/modificarMonitor.xhtml");
-            mostrarClases.forward(request, response);  
-            
-            
     }
 
     /**
@@ -114,36 +96,20 @@ public class modificarMonitores extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
         ServletContext context = request.getServletContext();
+        
+        Integer dniOriginal = Integer.parseInt(request.getParameter("dniOriginal"));
+        Integer dni = Integer.parseInt(request.getParameter("dni"));
+        String nombre = request.getParameter("nombreCompleto");
+        String email = request.getParameter("email");
+        String numeroSS = request.getParameter("numeroSS");
+        String telefono = request.getParameter("telefono");
+        
+        db.modificarMonitor(nombre, dni, email, telefono, numeroSS, dniOriginal);
+        
+        RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
+        pInici.forward(request, response);
 
-        Connection connection = null;
-        Statement statement = null;
-        try {
-            InitialContext initialContext = new InitialContext();
-
-            connection = datasource.getConnection();
-            statement = connection.createStatement();
-            String dniOriginal = request.getParameter("dniOriginal");
-            String dni = request.getParameter("dni");
-            String nombre = request.getParameter("nombreCompleto");
-            String email = request.getParameter("email");
-            String numeroSS = request.getParameter("numeroSS");
-            String telefono = request.getParameter("telefono");
-
-            String query = "UPDATE monitor SET DNI=" + dni + ", NOMBRE='" + nombre + "', EMAIL='" + email + "', TELEFONO='" + telefono + "', NUMEROSS='" + numeroSS + "' WHERE DNI=" + dniOriginal + ";";
-            System.out.println(query);
-            connection = datasource.getConnection();
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
-
-            RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
-
-            pInici.forward(request, response);
-
-        } catch (SQLException | NamingException ex) {
-            Logger.getLogger(muestraMonitores.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**

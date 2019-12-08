@@ -17,13 +17,13 @@ public class Monitor {
     String telefono;
     String numeroSS;
     
-    public Monitor(int dni, String nombreCompleto, String email, String telefono, String numeroSS) {
-        this.dni=dni;
-        this.email=email;
-        this.nombreCompleto=nombreCompleto;
-        this.numeroSS=numeroSS;
-        this.telefono=telefono;
-    }
+//    public Monitor(int dni, String nombreCompleto, String email, String telefono, String numeroSS) {
+//        this.dni=dni;
+//        this.email=email;
+//        this.nombreCompleto=nombreCompleto;
+//        this.numeroSS=numeroSS;
+//        this.telefono=telefono;
+//    }
     
     
     
