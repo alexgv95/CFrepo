@@ -45,7 +45,13 @@ public class ProcesarUsuario extends HttpServlet {
             String passwordBuena = usr.getPassword();
                     System.out.println(passwordBuena);
             String tipoUsuario = usr.getTipo();
-
+            String nombreUser = usr.getNombre();
+            System.out.println("Nombre: " + nombreUser);
+            
+            Cookie cookie = new Cookie("nombre", nombreUser);
+            cookie.setMaxAge(-1);
+            response.addCookie(cookie);
+            
             sesion.setAttribute("id_usuario", usr.getId_usuario());
 
             if (dni != null && password.equals(passwordBuena)) {

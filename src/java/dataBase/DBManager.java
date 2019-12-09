@@ -347,7 +347,7 @@ public class DBManager {
 
     public Usuarios usuario(String dni) throws NamingException, SQLException {
 
-        String query = "SELECT TIPO, PASSWORD, ID_USUARIO FROM usuarios WHERE (DNI='" + dni + "');";
+        String query = "SELECT TIPO, PASSWORD, ID_USUARIO, NOMBRE FROM usuarios WHERE (DNI='" + dni + "');";
         Statement st = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -360,6 +360,7 @@ public class DBManager {
             usuario.setId_usuario(rs.getInt("ID_USUARIO"));
             usuario.setPassword(rs.getString("PASSWORD"));
             usuario.setTipo(rs.getString("TIPO"));
+            usuario.setNombre(rs.getString("NOMBRE"));
 
         } catch (SQLException ex) {
             Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE,

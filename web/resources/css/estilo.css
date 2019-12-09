@@ -8,6 +8,11 @@ and open the template in the editor.
     Author     : GoirienaProgrammer
 */
 
+#SesionCookie{
+    float: right;
+    font-size: 28px;
+}
+
 #menu{
     position: fixed;
     background-color: #e86d18;
@@ -19,7 +24,7 @@ and open the template in the editor.
     padding: 0;
     padding-bottom: 30px;
     overflow: hidden;
-    font-size: 32px;
+    font-size: 30px;
 }
 
 .liMenu{
