@@ -36,8 +36,8 @@ public class mostrarSocios extends HttpServlet {
             throws ServletException, IOException {
         ServletContext contexto = request.getServletContext();
         
-        String tipo = "SOCIO";
-        ArrayList socios = db.mostrarSocios(tipo);
+        
+        ArrayList socios = db.mostrarSocios();
         request.setAttribute("socios", socios);
 
         RequestDispatcher mostrarSocios = contexto.getRequestDispatcher("/sociosAdmin.xhtml");

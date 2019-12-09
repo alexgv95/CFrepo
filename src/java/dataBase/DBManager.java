@@ -732,9 +732,9 @@ public class DBManager {
         }
     }
 
-    public ArrayList mostrarSocios(String tipo) {
+    public ArrayList mostrarSocios() {
 
-        String query1 = "SELECT * FROM usuarios WHERE (TIPO='" + tipo + "');";
+        String query1 = "SELECT * FROM usuarios;";
         Statement st = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -749,7 +749,7 @@ public class DBManager {
                 usr.setDireccion(rs.getString("DIRECCION"));
                 usr.setDni(rs.getString("DNI"));
                 usr.setNombre(rs.getString("NOMBRE"));
-                usr.setTipo("SOCIO");
+                usr.setTipo(rs.getString("TIPO"));
                 socios.add(usr);
             }
 
