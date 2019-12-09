@@ -396,13 +396,45 @@ public class DBManager {
         return usuario;
     }
 
-    public ArrayList clasesInicio() throws NamingException, SQLException {
+//    public ArrayList clasesInicio() throws NamingException, SQLException {
+//
+//        String query = "select * from clases";
+//        Statement st = null;
+//        ResultSet rs = null;
+//        Connection conn = null;
+//
+//        ArrayList<Clase> clases = new ArrayList<>();
+//        try {
+//            conn = this.conectar();
+//            st = conn.createStatement();
+//            rs = st.executeQuery(query);
+//
+//            while (rs.next()) {
+//                Clase clase = new Clase();
+//                clase.setClase(rs.getString("CLASE"));
+//                clase.setDescripcion(rs.getString("DESCRIPCION"));
+//                clase.setHorario(this.horarioClase(rs.getString("CLASE")));
+//                clase.setMonitor(this.monitorClase(rs.getString("CLASE")));
+//                clase.setComentarios(this.getComentarios(rs.getString("CLASE")));
+//                clases.add(clase);
+//
+//            }
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE,
+//                    "Falló la consulta", ex);
+//        } finally {
+//
+//            this.desconectar(conn, rs, st);
+//        }
+//        return clases;
+//    }
+    public ArrayList clases() throws NamingException, SQLException {
 
-        String query = "select * from clases";
+        String query = "select * from horarios";
         Statement st = null;
         ResultSet rs = null;
         Connection conn = null;
-
         ArrayList<Clase> clases = new ArrayList<>();
         try {
             conn = this.conectar();
@@ -411,10 +443,12 @@ public class DBManager {
 
             while (rs.next()) {
                 Clase clase = new Clase();
+                clase.setId_horario(rs.getInt("ID_HORARIO"));
+                clase.setId_clase(rs.getInt("ID_CLASE"));
                 clase.setClase(rs.getString("CLASE"));
-                clase.setDescripcion(rs.getString("DESCRIPCION"));
-                clase.setHorario(this.horarioClase(rs.getString("CLASE")));
-                clase.setMonitor(this.monitorClase(rs.getString("CLASE")));
+                clase.setDescripcion(this.descripcionClase(rs.getString("CLASE")));
+                clase.setHorario(rs.getString("HORARIO"));
+                clase.setMonitor(rs.getString("MONITOR"));
                 clase.setComentarios(this.getComentarios(rs.getString("CLASE")));
                 clases.add(clase);
 
@@ -457,54 +491,118 @@ public class DBManager {
 
     }
 
-    public String horarioClase(String clase) throws NamingException, SQLException {
+    public String descripcionClase(String clase) {
 
-        String query = "select HORARIO from horarios where (CLASE ='" + clase + "');";
+        String query = "select DESCRIPCION from clases where (CLASE ='" + clase + "');";
         Statement st = null;
         ResultSet rs = null;
         Connection conn = null;
-        String horario = null;
+        String descripcion = null;
         try {
             conn = this.conectar();
             st = conn.createStatement();
             rs = st.executeQuery(query);
             rs.next();
-            horario = rs.getString("HORARIO");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE,
-                    "Falló la consulta", ex);
+            descripcion = rs.getString("DESCRIPCION");
+            return descripcion;
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
 
             this.desconectar(conn, rs, st);
+
         }
-        return horario;
+        return descripcion;
     }
 
-    public String monitorClase(String clase) throws NamingException, SQLException {
+    public void anadirClase(String clase, String descripcion) {
 
-        String query = "select MONITOR from horarios where (CLASE ='" + clase + "');";
+        String query = "INSERT INTO clases (CLASE,DESCRIPCION) VALUES('" + clase
+                + "', '" + descripcion + "');";
+        System.out.println(query);
         Statement st = null;
         ResultSet rs = null;
         Connection conn = null;
-        String monitor = null;
         try {
             conn = this.conectar();
             st = conn.createStatement();
-            rs = st.executeQuery(query);
-            rs.next();
-            monitor = rs.getString("MONITOR");
+            st.executeUpdate(query);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE,
-                    "Falló la consulta", ex);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
 
             this.desconectar(conn, rs, st);
         }
-        return monitor;
     }
 
+    public void anadirHorario(String clase, String horario, String monitor) {
+
+        String query = "INSERT INTO horarios (CLASE,HORARIO,MONITOR) VALUES('" + clase
+                + "', '" + horario + "','" + monitor + "');";
+        System.out.println(query);
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            this.desconectar(conn, rs, st);
+        }
+    }
+    //    public String horarioClase(String clase) throws NamingException, SQLException {
+    //
+    //        String query = "select HORARIO from horarios where (CLASE ='" + clase + "');";
+    //        Statement st = null;
+    //        ResultSet rs = null;
+    //        Connection conn = null;
+    //        String horario = null;
+    //        try {
+    //            conn = this.conectar();
+    //            st = conn.createStatement();
+    //            rs = st.executeQuery(query);
+    //            rs.next();
+    //            horario = rs.getString("HORARIO");
+    //
+    //        } catch (SQLException ex) {
+    //            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE,
+    //                    "Falló la consulta", ex);
+    //        } finally {
+    //
+    //            this.desconectar(conn, rs, st);
+    //        }
+    //        return horario;
+    //    }
+
+    //    public String monitorClase(String clase) throws NamingException, SQLException {
+    //
+    //        String query = "select MONITOR from horarios where (CLASE ='" + clase + "');";
+    //        Statement st = null;
+    //        ResultSet rs = null;
+    //        Connection conn = null;
+    //        String descripcion = null;
+    //        try {
+    //            conn = this.conectar();
+    //            st = conn.createStatement();
+    //            rs = st.executeQuery(query);
+    //            rs.next();
+    //            descripcion = rs.getString("MONITOR");
+    //
+    //        } catch (SQLException ex) {
+    //            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE,
+    //                    "Falló la consulta", ex);
+    //        } finally {
+    //
+    //            this.desconectar(conn, rs, st);
+    //        }
+    //        return descripcion;
+    //    }
     public void insertarComentario(String clase, String comentario, String valoracion) {
 
         String query = "INSERT INTO comentarios(CLASE, COMENTARIO, VALORACION) VALUE('" + clase
@@ -616,7 +714,7 @@ public class DBManager {
 
     public ArrayList mostrarSocios(String tipo) {
 
-        String query1 = "SELECT * FROM socios WHERE (TIPO='" + tipo + "');";
+        String query1 = "SELECT * FROM usuarios WHERE (TIPO='" + tipo + "');";
         Statement st = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -685,8 +783,8 @@ public class DBManager {
             this.desconectar(conn, rs, st);
         }
     }
-    
-        public void borraSocio(String dni) {
+
+    public void borraSocio(String dni) {
 
         String query = "DELETE FROM usuarios where (DNI='" + dni + "');";
         Statement st = null;
@@ -706,5 +804,5 @@ public class DBManager {
     }
 
 //        "UPDATE clases SET DESCRIPCION='" + descripcion + "' WHERE (CLASE='" + claseOriginal + "');";
-//        "UPDATE horarios SET CLASE='" + claseNueva + "', " + "MONITOR='" + monitor + "'," + "HORARIO='" + horario + "' WHERE (ID_HORARIO='" + claseOriginal + "');";
+//        "UPDATE horarios SET CLASE='" + claseNueva + "', " + "MONITOR='" + descripcion + "'," + "HORARIO='" + horario + "' WHERE (ID_HORARIO='" + claseOriginal + "');";
 }

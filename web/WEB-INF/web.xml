@@ -55,7 +55,7 @@
     </servlet>
     <servlet>
         <servlet-name>anadirSocios</servlet-name>
-        <servlet-class>socios.anadirClases</servlet-class>
+        <servlet-class>socios.anadirSocios</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>borrarSocios</servlet-name>
@@ -72,10 +72,6 @@
     <servlet>
         <servlet-name>ManejadorClases</servlet-name>
         <servlet-class>clases.ManejadorClases</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EliminarClase</servlet-name>
-        <servlet-class>clases.EliminarClase</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AnadirMonitor</servlet-name>
@@ -184,10 +180,6 @@
     <servlet-mapping>
         <servlet-name>ManejadorClases</servlet-name>
         <url-pattern>/ManejadorClases</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EliminarClase</servlet-name>
-        <url-pattern>/EliminarClase</url-pattern>
     </servlet-mapping>
     <listener>
         <listener-class>

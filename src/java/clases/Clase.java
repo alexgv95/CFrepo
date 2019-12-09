@@ -14,12 +14,15 @@ import java.util.ArrayList;
  */
 
 public class Clase {
-    String clase;
-    String descripcion;
-    String horario;
-    String monitor;
-    ArrayList<Comentario> comentarios;
+    private String clase;
+    private String descripcion;
+    private String horario;
+    private String monitor;
+    private ArrayList<Comentario> comentarios;
     private Integer id_clase;
+    private Integer id_horario;
+    private int ocupacion = 0;
+    
 
 
 //    public Clase(String clase, String descripcion, String horario, String monitor, ArrayList<Comentario> comentarios) {
@@ -80,7 +83,7 @@ public class Clase {
 
     @Override
     public String toString() {
-        return "Clase{" + "clase=" + clase + ", descripcion=" + descripcion + ", horario=" + horario + ", monitor=" + monitor + ", comentarios=" + comentarios + '}';
+        return "Clase{" + "clase=" + getClase() + ", descripcion=" + getDescripcion() + ", horario=" + getHorario() + ", monitor=" + getMonitor() + ", comentarios=" + getComentarios() + '}';
     }
 
     /**
@@ -95,6 +98,34 @@ public class Clase {
      */
     public void setId_clase(Integer id_clase) {
         this.id_clase = id_clase;
+    }
+
+    /**
+     * @return the id_horario
+     */
+    public Integer getId_horario() {
+        return id_horario;
+    }
+
+    /**
+     * @param id_horario the id_horario to set
+     */
+    public void setId_horario(Integer id_horario) {
+        this.id_horario = id_horario;
+    }
+
+    /**
+     * @return the ocupacion
+     */
+    public int getOcupacion() {
+        return ocupacion;
+    }
+
+    /**
+     * @param ocupacion the ocupacion to set
+     */
+    public void setOcupacion(int ocupacion) {
+        this.ocupacion = ocupacion;
     }
 
  

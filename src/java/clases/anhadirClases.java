@@ -5,6 +5,7 @@
  */
 package clases;
 
+import dataBase.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -28,21 +29,7 @@ import javax.sql.DataSource;
  */
 public class anhadirClases extends HttpServlet {
 
-    DataSource datasource;
-
-    @Override
-    public void init() throws ServletException {
-
-        try {
-            InitialContext initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-            System.out.println("Habemus Conexion!!");
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    DBManager db = new DBManager();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -96,38 +83,20 @@ public class anhadirClases extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            response.setContentType("text/html;charset=UTF-8");
-            ServletContext contexto = request.getServletContext();
 
-            String clase = request.getParameter("clase");
-            String horario = request.getParameter("horario");
-            String monitor = request.getParameter("monitor");
-            String descripcion = request.getParameter("descripcion");
-            System.out.println(clase);
-            System.out.println(horario);
-            System.out.println(monitor);
+        ServletContext contexto = request.getServletContext();
 
-            String query = "INSERT INTO CLASES (CLASE,HORARIO,MONITOR,DESCRIPCION) VALUES('" + clase + "', '" + horario
-                    + "', '" + monitor + "', '" + descripcion + "');";
-            System.out.println(query);
+        String clase = request.getParameter("clase");
+        String horario = request.getParameter("horario");
+        String monitor = request.getParameter("monitor");
+        String descripcion = request.getParameter("descripcion");
+        db.anadirClase(clase, descripcion);
+        db.anadirHorario(clase, horario, monitor);
 
-            Connection conn = datasource.getConnection();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(query);
-            
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Clase Añadida !');");
-            out.println("</script>");
-            
-            RequestDispatcher paginaInicio
-                    = contexto.getRequestDispatcher("/mostrarClases");
-            paginaInicio.forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(anhadirClases.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        RequestDispatcher paginaInicio
+                = contexto.getRequestDispatcher("/mostrarClases");
+        paginaInicio.forward(request, response);
+
     }
 
     /**

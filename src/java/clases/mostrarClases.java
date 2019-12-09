@@ -80,7 +80,7 @@ public class mostrarClases extends HttpServlet {
     private void listarClases(HttpServletRequest request, HttpServletResponse response) {
         ServletContext contexto = request.getServletContext();
         try {
-            ArrayList clases = db.clasesInicio();
+            ArrayList clases = db.clases();
             request.setAttribute("ArrayClases", clases);
             RequestDispatcher volverAMenu = contexto.getRequestDispatcher("/clasesAdmin.xhtml");
             volverAMenu.forward(request, response);

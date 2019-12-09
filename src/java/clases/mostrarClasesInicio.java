@@ -68,15 +68,16 @@ public class mostrarClasesInicio extends HttpServlet {
             throws ServletException, IOException {
 
         ServletContext contexto = request.getServletContext();
-
         try {
-            ArrayList clases = db.clasesInicio();
+
+            ArrayList clases = db.clases();
             request.setAttribute("clases", clases);
             RequestDispatcher mostrarClases = contexto.getRequestDispatcher("/clases.xhtml");
             mostrarClases.forward(request, response);
-        } catch (SQLException | NamingException ex) {
-            Logger.getLogger(muestraMonitores.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException | SQLException ex) {
+            Logger.getLogger(mostrarClasesInicio.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**
