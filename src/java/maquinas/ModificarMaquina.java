@@ -62,15 +62,15 @@ public class ModificarMaquina extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             ServletContext contexto = request.getServletContext();
-            String maquina = request.getParameter("maquina");
+            String nombreMaquina = request.getParameter("maquina");
             int cantidad = Integer.parseInt(request.getParameter("cantidad"));
 
             
-            Maquina maquinas = new Maquina();
-            maquinas.setCantidad(cantidad);
-            maquinas.setMaquina(maquina);
+            Maquina maquina = new Maquina();
+            maquina.setCantidad(cantidad);
+            maquina.setMaquina(nombreMaquina);
             
-            request.setAttribute("maquina", maquinas);
+            request.setAttribute("maquina", maquina);
            
 
             RequestDispatcher mostrarClases = contexto.getRequestDispatcher("/modificarMaquina.xhtml");
@@ -89,9 +89,10 @@ public class ModificarMaquina extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ServletContext contexto = request.getServletContext();
-        String maquina = request.getParameter("MAQUINA");
+        String maquina = request.getParameter("maquinaOriginal");
+        String nombreMaquina = request.getParameter("MAQUINA");
         int cantidad = Integer.parseInt(request.getParameter("CANTIDAD"));
-        db.modificarMaquina(maquina, cantidad);
+        db.modificarMaquina(nombreMaquina, cantidad, maquina);
 
         RequestDispatcher mostrarDescripcion = contexto.getRequestDispatcher("/MostrarMaquinas");
         mostrarDescripcion.forward(request, response);

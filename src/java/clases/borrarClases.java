@@ -5,6 +5,7 @@
  */
 package clases;
 
+import dataBase.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -29,19 +30,7 @@ import javax.sql.DataSource;
  */
 public class borrarClases extends HttpServlet {
 
-    DataSource datasource;
-
-    @Override
-    public void init() throws ServletException {
-        try {
-            InitialContext initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(mostrarInformacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    DBManager db = new DBManager();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,19 +43,13 @@ public class borrarClases extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet borrarClases</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet borrarClases at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
+        ServletContext context = request.getServletContext();
+        String id_horario = request.getParameter("id_horario");
+        db.borraClaseHorario(id_horario);
+
+        RequestDispatcher volverAMenu = context.getRequestDispatcher("/mostrarClases");
+        volverAMenu.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -95,32 +78,8 @@ public class borrarClases extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = request.getServletContext();
-        String clase = request.getParameter("clase");
-        String query = "DELETE FROM CLASES WHERE CLASE = '" + clase + "';";
-        System.out.println(query);
-        ResultSet resultSet = null;
-        Connection connection = null;
-        Statement statement = null;
-        
-        try{
-            connection = datasource.getConnection();
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
-            
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Clase Borrada !');");
-            out.println("</script>");
-            
-            RequestDispatcher volverAMenu = context.getRequestDispatcher("/mostrarClases");
-            volverAMenu.forward(request, response);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(borrarClases.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
+
     }
 
     /**

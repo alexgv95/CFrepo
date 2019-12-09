@@ -8,20 +8,12 @@ package clases;
 import dataBase.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 /**
  *
@@ -87,11 +79,12 @@ public class anhadirClases extends HttpServlet {
         ServletContext contexto = request.getServletContext();
 
         String clase = request.getParameter("clase");
+        String id_clase = request.getParameter("id_clase");
         String horario = request.getParameter("horario");
         String monitor = request.getParameter("monitor");
         String descripcion = request.getParameter("descripcion");
-        db.anadirClase(clase, descripcion);
-        db.anadirHorario(clase, horario, monitor);
+        db.anadirClase( id_clase, clase, descripcion);
+        db.anadirHorario(id_clase, clase, horario, monitor);
 
         RequestDispatcher paginaInicio
                 = contexto.getRequestDispatcher("/mostrarClases");

@@ -78,7 +78,7 @@ public class DBManager {
             rs = st.executeQuery(query);
 
             while (rs.next()) {
-                TablaDeClases clases = new TablaDeClases();
+                Clase clases = new Clase();
                 clases.setClase(rs.getString("CLASE"));
                 clases.setHorario(rs.getString("HORARIO"));
                 clases.setMonitor(rs.getString("MONITOR"));
@@ -272,10 +272,10 @@ public class DBManager {
             st = conn.createStatement();
             rs = st.executeQuery(query1);
             while (rs.next()) {
-                Maquina maquinas = new Maquina();
-                maquinas.setMaquina(rs.getString("MAQUINA"));
-                maquinas.setCantidad(rs.getInt("CANTIDAD"));
-                maquinasList.add(maquinas);
+                Maquina maquina = new Maquina();
+                maquina.setMaquina(rs.getString("MAQUINA"));
+                maquina.setCantidad(rs.getInt("CANTIDAD"));
+                maquinasList.add(maquina);
             }
 
         } catch (NamingException | SQLException ex) {
@@ -325,9 +325,10 @@ public class DBManager {
 
     }
 
-    public void modificarMaquina(String maquina, int cantidad) {
+    public void modificarMaquina(String NombreMaquina, int cantidad, String maquina) {
 
-        String query = "UPDATE maquinas SET CANTIDAD='" + cantidad + "'WHERE (MAQUINA ='" + maquina + "');";
+        String query = "UPDATE maquinas SET MAQUINA='" + NombreMaquina + "',CANTIDAD='" + cantidad + "'WHERE (MAQUINA ='" + maquina + "');";
+        System.out.println(query);
         Statement st = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -443,7 +444,7 @@ public class DBManager {
 
             while (rs.next()) {
                 Clase clase = new Clase();
-                clase.setId_horario(rs.getInt("ID_HORARIO"));
+                clase.setId_horario(rs.getString("ID_HORARIO"));
                 clase.setId_clase(rs.getInt("ID_CLASE"));
                 clase.setClase(rs.getString("CLASE"));
                 clase.setDescripcion(this.descripcionClase(rs.getString("CLASE")));
@@ -515,9 +516,9 @@ public class DBManager {
         return descripcion;
     }
 
-    public void anadirClase(String clase, String descripcion) {
+    public void anadirClase(String id_clase, String clase, String descripcion) {
 
-        String query = "INSERT INTO clases (CLASE,DESCRIPCION) VALUES('" + clase
+        String query = "INSERT INTO clases (ID_ClASE,CLASE,DESCRIPCION) VALUES('" + id_clase + "','" + clase
                 + "', '" + descripcion + "');";
         System.out.println(query);
         Statement st = null;
@@ -536,10 +537,10 @@ public class DBManager {
         }
     }
 
-    public void anadirHorario(String clase, String horario, String monitor) {
+    public void anadirHorario(String id_clase, String clase, String horario, String monitor) {
 
-        String query = "INSERT INTO horarios (CLASE,HORARIO,MONITOR) VALUES('" + clase
-                + "', '" + horario + "','" + monitor + "');";
+        String query = "INSERT INTO horarios (CLASE,HORARIO,MONITOR,ID_CLASE) VALUES('" + clase
+                + "', '" + horario + "','" + monitor + "','" + id_clase + "');";
         System.out.println(query);
         Statement st = null;
         ResultSet rs = null;
@@ -555,6 +556,25 @@ public class DBManager {
 
             this.desconectar(conn, rs, st);
         }
+    }
+
+    public void borraClaseHorario(String id_horario) {
+
+        String query = "DELETE FROM horarios where (ID_HORARIO='" + id_horario + "');";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+
     }
     //    public String horarioClase(String clase) throws NamingException, SQLException {
     //
@@ -803,6 +823,41 @@ public class DBManager {
 
     }
 
-//        "UPDATE clases SET DESCRIPCION='" + descripcion + "' WHERE (CLASE='" + claseOriginal + "');";
-//        "UPDATE horarios SET CLASE='" + claseNueva + "', " + "MONITOR='" + descripcion + "'," + "HORARIO='" + horario + "' WHERE (ID_HORARIO='" + claseOriginal + "');";
+    public void modificarClase(String descripcion, String clase, String claseOriginal) {
+
+        String query = "UPDATE clases SET DESCRIPCION='" + descripcion + "' WHERE (CLASE='" + claseOriginal + "');";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+    }
+
+    public void modificarHorario(String claseNueva, String monitor, String horario, String id_horario) {
+
+        String query = "UPDATE horarios SET CLASE='" + claseNueva + "', " + "MONITOR='" + monitor + "'," + "HORARIO='" + horario + "' WHERE (ID_HORARIO='" + id_horario + "');";
+
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+    }
+
 }

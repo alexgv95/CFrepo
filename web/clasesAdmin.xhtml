@@ -29,6 +29,8 @@ and open the template in the editor.
                         <td>
                             <table class="tablasMostrarObjetos">
                                 <tr id="cabeceraTablaMostrarObjetos">
+                                    <th>ID_CLASE</th>
+                                    <th>ID_HORARIO</th>
                                     <th>CLASE</th>
                                     <th>HORARIO</th>
                                     <th>MONITOR</th>
@@ -36,6 +38,8 @@ and open the template in the editor.
                                 </tr>
                                 <c:forEach items="#{requestScope.ArrayClases}" var="clase">
                                     <tr>
+                                        <td>#{clase.id_clase}</td>
+                                        <td>#{clase.id_horario}</td>
                                         <td>#{clase.clase}</td>
                                         <td>#{clase.horario}</td>
                                         <td>#{clase.monitor}</td>
@@ -44,6 +48,8 @@ and open the template in the editor.
                                                 <tr>
                                                     <td>
                                                         <form action="/CFrepo/modificarClases" method="get">
+                                                            <input type="hidden" name="id_clase" value="#{clase.id_clase}"/>
+                                                            <input type="hidden" name="id_horario" value="#{clase.id_horario}"/>
                                                             <input type="hidden" name="clase" value="#{clase.clase}"/>
                                                             <input type="hidden" name="horario" value="#{clase.horario}"/>
                                                             <input type="hidden" name="monitor" value="#{clase.monitor}"/>
@@ -53,7 +59,7 @@ and open the template in the editor.
                                                     </td>
                                                     <td>
                                                         <form action="/CFrepo/borrarClases" method="post">
-                                                            <input type="hidden" name="clase" value="#{clase.clase}"/>
+                                                            <input type="hidden" name="id_horario" value="#{clase.id_horario}"/>
                                                             <input type="submit" value="BORRAR"/>
                                                         </form>
                                                     </td>
@@ -67,6 +73,7 @@ and open the template in the editor.
                         <td width="100px">
                             <div width="100px">
                                 <form method="post" class="formLogin" action="/CFrepo/anhadirClases" align="center">
+                                    <input id="id_clase" name="id_clase" type="text" placeholder="Id_clase"/>
                                     <input id="clase" name="clase" type="text" placeholder="Nombre de la clase"/>
                                     <input id="horario" name="horario" type="text" placeholder="Horario"/>
                                     <input id="monitor" name="monitor" type="text" placeholder="Monitor"/>

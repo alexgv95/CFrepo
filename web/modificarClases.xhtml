@@ -26,6 +26,8 @@ and open the template in the editor.
                         <td>
                             <table class="tablasMostrarObjetos">
                                 <tr id="cabeceraTablaMostrarObjetos">
+                                    <th>ID_CLASE</th>
+                                    <th>ID_HORARIO</th>
                                     <th>CLASE</th>
                                     <th>HORARIO</th>
                                     <th>MONITOR</th>
@@ -33,6 +35,8 @@ and open the template in the editor.
                                 </tr>
                                 <p>Esta editando la clase <b>#{claseAEditar.clase}</b></p>
                                 <tr>
+                                    <td>#{claseAEditar.id_clase}</td>
+                                    <td>#{claseAEditar.id_horario}</td>
                                     <td>#{claseAEditar.clase}</td>
                                     <td>#{claseAEditar.horario}</td>
                                     <td>#{claseAEditar.monitor}</td>
@@ -46,6 +50,7 @@ and open the template in the editor.
                                 <p>INTRODUZCA TODOS LOS DATOS DE <b>#{claseAEditar.clase}</b> MODIFICANDO LOS QUE QUIERA </p>
                                 <form method="post" class="formLogin" action="/CFrepo/modificarClases" align="center">
                                     <input id="claseOriginal" name="claseOriginal" type="hidden" value="#{claseAEditar.clase}"/>
+                                    <input id="id_horario" name="id_horario" type="hidden" value="#{claseAEditar.id_horario}"/>
                                     <input id="clase" name="clase" type="text" placeholder="clase"/>
                                     <input id="horario" name="horario" type="text" placeholder="horario"/>
                                     <input id="monitor" name="monitor" type="text" placeholder="monitor"/>

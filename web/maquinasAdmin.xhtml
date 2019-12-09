@@ -39,14 +39,14 @@
                                             <table id="botonesTabla">
                                                 <tr>
                                                     <td>
-                                                        <form action="/CeuFitSW1/ModificarMaquina" method="get">
+                                                        <form action="/CFrepo/ModificarMaquina" method="get">
                                                             <input type="hidden" name="maquina" value="#{entry.maquina}"/>
                                                             <input type="hidden" name="cantidad" value="#{entry.cantidad}"/>
                                                             <input type="submit" value="MODIFICAR"/>
                                                         </form>
                                                     </td>
                                                     <td>
-                                                        <form action="/CeuFitSW1/BorrarMaquina" method="post">
+                                                        <form action="/CFrepo/BorrarMaquina" method="post">
                                                             <input type="hidden" name="MAQUINA" value="#{entry.maquina}"/>
                                                             <input type="submit" value="BORRAR"/>
                                                         </form>
@@ -60,10 +60,10 @@
                         </td>
                         <td width="100px">
                             <div width="100px">
-                                <form method="get" class="formLogin" action="/CeuFitSW1/AnadirMaquina" align="center">
+                                <form method="get" class="formLogin" action="/CFrepo/AnadirMaquina" align="center">
                                     <input id="MAQUINA" name="MAQUINA" type="text" placeholder="MAQUINA"/>
                                     <input id="CANTIDAD" name="CANTIDAD" type="int" placeholder="CANTIDAD"/>
-                                    <input id="Enviar" type="submit" value="VAMOS!"/>
+                                    <input id="Añadir máquina" type="submit" value="VAMOS!"/>
 
                                 </form>
                             </div>

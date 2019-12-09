@@ -20,7 +20,7 @@ public class Clase {
     private String monitor;
     private ArrayList<Comentario> comentarios;
     private Integer id_clase;
-    private Integer id_horario;
+    private String id_horario;
     private int ocupacion = 0;
     
 
@@ -103,14 +103,14 @@ public class Clase {
     /**
      * @return the id_horario
      */
-    public Integer getId_horario() {
+    public String getId_horario() {
         return id_horario;
     }
 
     /**
      * @param id_horario the id_horario to set
      */
-    public void setId_horario(Integer id_horario) {
+    public void setId_horario(String id_horario) {
         this.id_horario = id_horario;
     }
 

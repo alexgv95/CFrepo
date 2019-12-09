@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+        <ui:composition template="./plantillas/templateVistaAdmin.xhtml"
+                        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                        xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+            <ui:define name="top">
+            </ui:define>
+
+            <ui:define name="content">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                
+                <p> #{requestScope.ModificarMaquina}</p>
+                <table>
+                    <tr>
+                        <td>
+                <table class="tablasMostrarObjetos">
+                    <tr id="cabeceraTablaMostrarObjetos">
+                        <th>MAQUINA</th>
+                        <th>CANTIDAD</th>
+                    </tr>
+                        <tr>
+                            <td>#{maquina.maquina}</td>
+                            <td>#{maquina.cantidad}</td>
+                        </tr>
+                </table>
+                        </td>
+                        <td width="100px">
+                            <div width="100px">
+                                <p>INTRODUZCA LOS DATOS DE LA MÁQUINA A MODIFICAR #{maquina.maquina} </p>
+                                <form method="post" class="formLogin" action="/CFrepo/ModificarMaquina" align="center">
+                                    <input type="hidden" name="maquinaOriginal" value="#{maquina.maquina}" />
+                                    <input id="MAQUINA" name="MAQUINA" type="text" placeholder="MAQUINA"/>
+                                    <input id="CANTIDAD" name="CANTIDAD" type="text" placeholder="CANTIDAD"/>
+                                    <input id="Enviar" type="submit" value="VAMOS!"/>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
