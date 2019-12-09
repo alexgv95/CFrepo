@@ -98,11 +98,11 @@ public class ProcesarUsuario extends HttpServlet {
     
     @Override
     public void destroy(){
-    
+    /*
         rutaSocio = null;
         rutaAdmin = null;
         rutaCasoError = null;
         System.out.println("Atributos puestos a null de nuevo");
-    
+    */
     }
 }

@@ -254,6 +254,17 @@
         <servlet-name>MostrarMisClases</servlet-name>
         <url-pattern>/MostrarMisClases</url-pattern>
     </servlet-mapping>
+    
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500.xhtml</location>
+    </error-page>
+    
     <session-config>
         <session-timeout>
             30
