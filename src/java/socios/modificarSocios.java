@@ -5,6 +5,7 @@
  */
 package socios;
 
+import dataBase.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import login.Usuarios;
 
 /**
  *
@@ -28,7 +30,7 @@ import javax.sql.DataSource;
  */
 public class modificarSocios extends HttpServlet {
 
-    DataSource datasource;
+    DBManager db = new DBManager();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,19 +41,6 @@ public class modificarSocios extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    public void init() throws ServletException {
-        InitialContext initialContext;
-        try {
-            initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(mostrarSocios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -83,15 +72,20 @@ public class modificarSocios extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ServletContext contexto = request.getServletContext();
+
+        Usuarios socio = new Usuarios();
         String dni = request.getParameter("DNI");
+        socio.setDni(dni);
         String password = request.getParameter("PASSWORD");
+        socio.setPassword(password);
         String tipo = request.getParameter("TIPO");
+        socio.setTipo(tipo);
         String nombre = request.getParameter("NOMBRE");
+        socio.setNombre(nombre);
         String apellidos = request.getParameter("APELLIDOS");
+        socio.setApellidos(apellidos);
         String direccion = request.getParameter("DIRECCION");
-
-        Socio socio = new Socio(dni, password, tipo, nombre, apellidos, direccion);
-
+        socio.setDireccion(direccion);
         request.setAttribute("socio", socio);
 
         RequestDispatcher gestionSocios = contexto.getRequestDispatcher("/modificarSocios.xhtml");
@@ -110,39 +104,21 @@ public class modificarSocios extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+
         ServletContext context = request.getServletContext();
 
-        Connection connection = null;
-        Statement statement = null;
+        String dniOriginal = request.getParameter("DNIORIGINAL");
+        String dni = request.getParameter("DNI");
+        String password = request.getParameter("PASSWORD");
+        String tipo = request.getParameter("TIPO");
+        String nombre = request.getParameter("NOMBRE");
+        String apellidos = request.getParameter("APELLIDOS");
+        String direccion = request.getParameter("DIRECCION");
 
-        try {
-            InitialContext initialContext = new InitialContext();
-            connection = datasource.getConnection();
-            statement = connection.createStatement();
-            String dniOriginal = request.getParameter("DNIORIGINAL");
-            String dni = request.getParameter("DNI");
-            String password = request.getParameter("PASSWORD");
-            String tipo = request.getParameter("TIPO");
-            String nombre = request.getParameter("NOMBRE");
-            String apellidos = request.getParameter("APELLIDOS");
-            String direccion = request.getParameter("DIRECCION");
-            String query = "UPDATE usuarios SET DNI='" + dni + "', PASSWORD='"
-                    + password + "', TIPO='" + tipo + "', NOMBRE='" + nombre + "', APELLIDOS='"
-                    + apellidos + "', DIRECCION ='" + direccion + "' WHERE DNI=" + dniOriginal + ";";
-            System.out.println(query);
-            connection = datasource.getConnection();
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
+        db.modificarSocio(nombre, dni, password, tipo, apellidos, dniOriginal, direccion);
 
-            RequestDispatcher gestionSocios = context.getRequestDispatcher("/mostrarSocios");
-
-            gestionSocios.forward(request, response);
-        } catch (NamingException ex) {
-            Logger.getLogger(modificarSocios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(modificarSocios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        RequestDispatcher gestionSocios = context.getRequestDispatcher("/mostrarSocios");
+        gestionSocios.forward(request, response);
 
     }
 

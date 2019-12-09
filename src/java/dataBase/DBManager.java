@@ -612,6 +612,96 @@ public class DBManager {
         } finally {
             this.desconectar(conn, rs, st);
         }
+    }
+
+    public ArrayList mostrarSocios(String tipo) {
+
+        String query1 = "SELECT * FROM socios WHERE (TIPO='" + tipo + "');";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        ArrayList socios = new ArrayList();
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            rs = st.executeQuery(query1);
+            while (rs.next()) {
+                Usuarios usr = new Usuarios();
+                usr.setApellidos(rs.getString("APELLIDOS"));
+                usr.setDireccion(rs.getString("DIRECCION"));
+                usr.setDni(rs.getString("DNI"));
+                usr.setNombre(rs.getString("NOMBRE"));
+                usr.setTipo("SOCIO");
+                socios.add(usr);
+            }
+
+        } catch (NamingException | SQLException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+        return socios;
+
+    }
+
+    public void modificarSocio(String nombre, String dni, String password, String tipo, String apellidos, String dniOriginal, String direccion) {
+
+        String query = "UPDATE usuarios SET DNI='" + dni + "', PASSWORD='"
+                + password + "', TIPO='" + tipo + "', NOMBRE='" + nombre + "', APELLIDOS='"
+                + apellidos + "', DIRECCION ='" + direccion + "' WHERE DNI=" + dniOriginal + ";";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
+    }
+
+    public void anadirSocio(String nombre, String dni, String password, String tipo, String apellidos, String direccion) {
+
+        String query = "INSERT INTO usuarios (DNI,PASSWORD,TIPO,NOMBRE,APELLIDOS,DIRECCION) VALUES('" + dni
+                + "', '" + password + "', '" + tipo + "', '" + nombre + "', '" + apellidos
+                + "', '" + direccion + "');";
+        System.out.println(query);
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            this.desconectar(conn, rs, st);
+        }
+    }
+    
+        public void borraSocio(String dni) {
+
+        String query = "DELETE FROM usuarios where (DNI='" + dni + "');";
+        Statement st = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = this.conectar();
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException | NamingException ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            this.desconectar(conn, rs, st);
+        }
 
     }
 

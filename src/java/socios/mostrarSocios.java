@@ -5,24 +5,15 @@
  */
 package socios;
 
+import dataBase.DBManager;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 /**
  *
@@ -30,7 +21,7 @@ import javax.sql.DataSource;
  */
 public class mostrarSocios extends HttpServlet {
 
-    DataSource datasource;
+    DBManager db = new DBManager();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,68 +32,17 @@ public class mostrarSocios extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    public void init() throws ServletException {
-        InitialContext initialContext;
-        try {
-            initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-
-        } catch (NamingException ex) {
-            Logger.getLogger(mostrarSocios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(mostrarSocios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         ServletContext contexto = request.getServletContext();
+        
+        String tipo = "SOCIO";
+        ArrayList socios = db.mostrarSocios(tipo);
+        request.setAttribute("socios", socios);
 
-        String query = "Select * from USUARIOS;";
-        ResultSet resultset = null;
-        Connection connection = null;
-        Statement statement = null;
-        ArrayList socios = new ArrayList();
+        RequestDispatcher mostrarSocios = contexto.getRequestDispatcher("/sociosAdmin.xhtml");
+        mostrarSocios.forward(request, response);
 
-        try {
-            connection = datasource.getConnection();
-            System.out.println(query);
-            statement = connection.createStatement();
-            resultset = statement.executeQuery(query);
-            while (resultset.next()) {
-                Socio socio = new Socio(resultset.getString("DNI"), resultset.getString("PASSWORD"),
-                        resultset.getString("TIPO"), resultset.getString("NOMBRE"),
-                        resultset.getString("APELLIDOS"), resultset.getString("DIRECCION"));
-                socios.add(socio);
-                System.out.println(socio);
-                System.out.println("Socio: " + socio);
-            }
-            connection.close();
-
-            request.setAttribute("socios", socios);
-            System.out.print(socios);
-            RequestDispatcher mostrarSocios = contexto.getRequestDispatcher("/sociosAdmin.xhtml");
-            mostrarSocios.forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(mostrarSocios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet mostrarSocios</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet mostrarSocios at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

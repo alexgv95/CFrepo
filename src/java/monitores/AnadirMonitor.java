@@ -36,19 +36,19 @@ public class AnadirMonitor extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AnadirMonitor</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AnadirMonitor at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
+        ServletContext context = request.getServletContext();
+        
+        int dni = Integer.parseInt(request.getParameter("DNI"));
+        String nombreCompleto = request.getParameter("NombreCompleto");
+        String email = request.getParameter("Email");
+        String numeroSS = request.getParameter("NumeroSS");
+        String telefono = request.getParameter("Telefono");
+        
+        db.insertarMonitor(dni, nombreCompleto, email, numeroSS, telefono);
+        
+        RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
+        pInici.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,17 +63,7 @@ public class AnadirMonitor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ServletContext context = request.getServletContext();
-        int dni = Integer.parseInt(request.getParameter("DNI"));
-        String nombreCompleto = request.getParameter("NombreCompleto");
-        String email = request.getParameter("Email");
-        String numeroSS = request.getParameter("NumeroSS");
-        String telefono = request.getParameter("Telefono");
-        db.insertarMonitor(dni, nombreCompleto, email, numeroSS, telefono);
-        RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
-        pInici.forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**
@@ -87,7 +77,7 @@ public class AnadirMonitor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);        
     }
 
     /**

@@ -5,6 +5,7 @@
  */
 package socios;
 
+import dataBase.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -29,6 +30,8 @@ import javax.sql.DataSource;
  */
 public class borrarSocios extends HttpServlet {
 
+    DBManager db = new DBManager();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,40 +41,15 @@ public class borrarSocios extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DataSource datasource;
-
-    public void init() throws ServletException {
-        InitialContext initialContext;
-
-        try {
-            initialContext = new InitialContext();
-            datasource = (DataSource) initialContext.lookup("jdbc/CEUFIT01");
-            Connection connection = datasource.getConnection();
-            Statement createStatement = connection.createStatement();
-
-        } catch (NamingException ex) {
-            Logger.getLogger(borrarSocios.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(borrarSocios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet borrarSocios</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet borrarSocios at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
+        ServletContext context = request.getServletContext();
+        String dni = request.getParameter("dni");
+        db.borraSocio(dni);
+
+        RequestDispatcher gestionSocios = context.getRequestDispatcher("/mostrarSocios");
+        gestionSocios.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -100,26 +78,8 @@ public class borrarSocios extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = request.getServletContext();
-        String dni = request.getParameter("dni");
-        String query = "DELETE FROM usuarios where DNI='" + dni + "';";
-        ResultSet resultSet = null;
-        Connection connection = null;
-        Statement statement = null;
-        System.out.println(query);
-        try {
-            connection = datasource.getConnection();
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
 
-            RequestDispatcher gestionSocios = context.getRequestDispatcher("/mostrarSocios");
-            gestionSocios.forward(request, response);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(borrarSocios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        processRequest(request, response);
     }
 
     /**
