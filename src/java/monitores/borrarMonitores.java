@@ -20,7 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class borrarMonitores extends HttpServlet {
 
-    DBManager db = new DBManager();
+    
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,7 +36,10 @@ public class borrarMonitores extends HttpServlet {
             throws ServletException, IOException {
         ServletContext context = request.getServletContext();
         Integer dni = Integer.parseInt(request.getParameter("dni"));
+        
+        DBManager db = new DBManager();    
         db.borrarMonitor(dni);
+
         RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
         pInici.forward(request, response);
     }

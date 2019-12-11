@@ -34,7 +34,7 @@ public class mostrarClases extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DBManager db = new DBManager();
+    
 
 
 
@@ -80,6 +80,7 @@ public class mostrarClases extends HttpServlet {
     private void listarClases(HttpServletRequest request, HttpServletResponse response) {
         ServletContext contexto = request.getServletContext();
         try {
+            DBManager db = new DBManager();
             ArrayList clases = db.clases();
             request.setAttribute("ArrayClases", clases);
             RequestDispatcher volverAMenu = contexto.getRequestDispatcher("/clasesAdmin.xhtml");

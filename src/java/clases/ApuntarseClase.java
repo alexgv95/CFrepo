@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  */
 public class ApuntarseClase extends HttpServlet {
 
-    DBManager db = new DBManager();
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,6 +43,7 @@ public class ApuntarseClase extends HttpServlet {
         String id_horario = request.getParameter("id_horario");
         ServletContext contexto = request.getServletContext();
         try {
+            DBManager db = new DBManager();
             db.apuntarseAClase(id_usuario, id_horario);
             request.setAttribute("Apuntado", "Te has apuntado correctamente");
             RequestDispatcher rd = contexto.getRequestDispatcher("/mostrarClasesDelHorario");

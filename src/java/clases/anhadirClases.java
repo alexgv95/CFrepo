@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class anhadirClases extends HttpServlet {
 
-    DBManager db = new DBManager();
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -83,6 +83,7 @@ public class anhadirClases extends HttpServlet {
         String horario = request.getParameter("horario");
         String monitor = request.getParameter("monitor");
         String descripcion = request.getParameter("descripcion");
+        DBManager db = new DBManager();
         db.anadirClase( id_clase, clase, descripcion);
         db.anadirHorario(id_clase, clase, horario, monitor);
 

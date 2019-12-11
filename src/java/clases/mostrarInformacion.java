@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class mostrarInformacion extends HttpServlet {
 
-    DBManager bd = new DBManager();
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,27 +35,10 @@ public class mostrarInformacion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet mostrarInformacion</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet mostrarInformacion at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
         ServletContext contexto = request.getServletContext();
         String clase = request.getParameter("clase");
+        DBManager bd = new DBManager();
+        
         String descripcion = bd.mostrarDescripcion(clase);
         request.setAttribute("descripcionClase", descripcion);
 
@@ -64,6 +47,13 @@ public class mostrarInformacion extends HttpServlet {
 
         RequestDispatcher mostrarDescripcion = contexto.getRequestDispatcher("/claseConcreta.xhtml");
         mostrarDescripcion.forward(request, response);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        processRequest(request, response);
 
     }
 

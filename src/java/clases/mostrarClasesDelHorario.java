@@ -26,9 +26,6 @@ import javax.servlet.http.HttpSession;
  */
 public class mostrarClasesDelHorario extends HttpServlet {
 
-//    DataSource datasource;
-    DBManager db = new DBManager();
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -47,6 +44,7 @@ public class mostrarClasesDelHorario extends HttpServlet {
             ServletContext contexto = request.getServletContext();
             HttpSession sesion = request.getSession();
             Integer id_usuario =  (Integer) sesion.getAttribute("id_usuario");
+            DBManager db = new DBManager();
             ArrayList arrayClases = db.verClasesParaApuntarse(id_usuario);
             request.setAttribute("TablaDeClases", arrayClases);
             RequestDispatcher rd = contexto.getRequestDispatcher("/clasesSocio.xhtml");
@@ -70,7 +68,7 @@ public class mostrarClasesDelHorario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
+        doGet(request, response);
     }
 
     /**

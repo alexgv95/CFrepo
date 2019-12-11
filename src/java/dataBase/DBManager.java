@@ -6,7 +6,6 @@
 package dataBase;
 
 import clases.Clase;
-import clases.TablaDeClases;
 import comentarios.Comentario;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -129,7 +128,7 @@ public class DBManager {
             st = conn.createStatement();
             rs = st.executeQuery(query1);
             while (rs.next()) {
-                TablaDeClases clases = new TablaDeClases();
+                Clase clases = new Clase();
                 clases.setClase(rs.getString("CLASE"));
                 clases.setHorario(rs.getString("HORARIO"));
                 clases.setMonitor(rs.getString("MONITOR"));
@@ -158,7 +157,7 @@ public class DBManager {
             st = conn.createStatement();
             rs = st.executeQuery(query1);
             while (rs.next()) {
-                TablaDeClases clases = new TablaDeClases();
+                Clase clases = new Clase();
                 clases.setClase(rs.getString("CLASE"));
                 misClases.add(clases);
             }

@@ -8,21 +8,12 @@ package clases;
 import dataBase.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-import monitores.muestraMonitores;
 
 /**
  *
@@ -30,7 +21,7 @@ import monitores.muestraMonitores;
  */
 public class modificarClases extends HttpServlet {
 
-    DBManager db = new DBManager();
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -107,6 +98,7 @@ public class modificarClases extends HttpServlet {
         String descripcion = request.getParameter("descripcion");
         String id_horario = request.getParameter("id_horario");
 
+        DBManager db = new DBManager();
         db.modificarClase(descripcion, claseNueva, claseOriginal);
         db.modificarHorario(claseNueva, monitor, horario, id_horario);
         

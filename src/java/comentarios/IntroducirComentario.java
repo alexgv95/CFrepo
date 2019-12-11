@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class IntroducirComentario extends HttpServlet {
 
-    DBManager db = new DBManager();
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -29,6 +29,7 @@ public class IntroducirComentario extends HttpServlet {
         String valoracion = request.getParameter("valoracion");
         String clase = request.getParameter("clase");
         String comentario = request.getParameter("comentario");
+        DBManager db = new DBManager();
         db.insertarComentario(clase, comentario, valoracion);
         request.setAttribute("ComentarioEnviado", "Comentario enviado con éxito");
         RequestDispatcher rd = contexto.getRequestDispatcher("/MostrarMisClases");

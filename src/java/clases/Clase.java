@@ -23,22 +23,6 @@ public class Clase {
     private String id_horario;
     private int ocupacion = 0;
     
-
-
-//    public Clase(String clase, String descripcion, String horario, String monitor, ArrayList<Comentario> comentarios) {
-//        this.clase = clase;
-//        this.descripcion = descripcion;
-//        this.horario = horario;
-//        this.monitor = monitor;
-//        this.comentarios = comentarios;
-//    }
-//
-//    public Clase(String clase, String descripcion, String horario, String monitor) {
-//        this.clase = clase;
-//        this.descripcion = descripcion;
-//        this.horario = horario;
-//        this.monitor = monitor;
-//    }
     
 
     public String getClase() {

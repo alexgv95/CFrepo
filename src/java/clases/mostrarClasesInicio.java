@@ -19,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import monitores.muestraMonitores;
 
 /**
  *
@@ -36,22 +35,19 @@ public class mostrarClasesInicio extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DBManager db = new DBManager();
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet mostrarClasesInicio</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet mostrarClasesInicio at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        ServletContext contexto = request.getServletContext();
+        try {
+            DBManager db = new DBManager();
+            ArrayList clases = db.clases();
+            request.setAttribute("clases", clases);
+            RequestDispatcher mostrarClases = contexto.getRequestDispatcher("/clases.xhtml");
+            mostrarClases.forward(request, response);
+        } catch (NamingException | SQLException ex) {
+            Logger.getLogger(mostrarClasesInicio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -66,18 +62,7 @@ public class mostrarClasesInicio extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ServletContext contexto = request.getServletContext();
-        try {
-
-            ArrayList clases = db.clases();
-            request.setAttribute("clases", clases);
-            RequestDispatcher mostrarClases = contexto.getRequestDispatcher("/clases.xhtml");
-            mostrarClases.forward(request, response);
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(mostrarClasesInicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        processRequest(request, response);
     }
 
     /**
