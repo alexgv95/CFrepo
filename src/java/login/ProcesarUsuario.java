@@ -54,7 +54,7 @@ public class ProcesarUsuario extends HttpServlet {
             
             sesion.setAttribute("id_usuario", usr.getId_usuario());
 
-            if (dni != null && password.equals(passwordBuena)) {
+            if (dni != null && comprobarDNI(dni) && password.equals(passwordBuena)) {
 
                 if (tipoUsuario.equals("SOCIO")) {
                     RequestDispatcher anhadirServlet
@@ -111,4 +111,48 @@ public class ProcesarUsuario extends HttpServlet {
         System.out.println("Atributos puestos a null de nuevo");
     */
     }
+    
+    public boolean comprobarDNI(String DNI){
+        
+        String numeros = DNI.substring(0, DNI.length()-1);
+        String letra = DNI.substring(DNI.length()-1);
+        
+        System.out.println(numeros+" - "+letra);
+        if(isNumeric(numeros)){
+            if(isLetras(letra)){
+                return true;
+            }
+        }
+                
+        return false;
+    }
+    
+    
+    static boolean isLetras(String cadena)
+	{
+		
+		for (int i = 0; i < cadena.length(); i++)
+		{
+			char caracter = cadena.toUpperCase().charAt(i);
+			int valorASCII = (int)caracter;
+			if (valorASCII != 165 && (valorASCII < 65 || valorASCII > 90)){
+				return false; //Se ha encontrado un caracter que no es letra
+                        }
+		}
+		//Terminado el bucle sin que se haya retornado false, es que todos los caracteres son letras
+                return true;
+	}
+    public boolean isNumeric(String numeros){
+        boolean resultado;
+        try{
+            Integer.parseInt(numeros);
+            resultado = true;
+            } catch (NumberFormatException excepcion) {
+                resultado = false;
+            }
+        return resultado;
+    }
+    
+    
+    
 }
