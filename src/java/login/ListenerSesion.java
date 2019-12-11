@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSessionListener;
 
 /**
  *
- * @author Sir_D
+ * 
  */
 public class ListenerSesion implements HttpSessionListener {
 
