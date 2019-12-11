@@ -20,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author enrique
  */
 public class AnadirMaquina extends HttpServlet {
-    
-    DBManager db = new DBManager();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,7 +38,7 @@ public class AnadirMaquina extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AnadirMaquina</title>");            
+            out.println("<title>Servlet AnadirMaquina</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AnadirMaquina at " + request.getContextPath() + "</h1>");
@@ -61,6 +59,7 @@ public class AnadirMaquina extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DBManager db = new DBManager();
         ServletContext contexto = request.getServletContext();
         String maquina = request.getParameter("MAQUINA");
         int cantidad = Integer.parseInt(request.getParameter("CANTIDAD"));

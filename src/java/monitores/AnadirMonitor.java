@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AnadirMonitor extends HttpServlet {
 
-    DBManager db = new DBManager();
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,6 +37,7 @@ public class AnadirMonitor extends HttpServlet {
             throws ServletException, IOException {
         
         ServletContext context = request.getServletContext();
+            DBManager db = new DBManager();
         
         int dni = Integer.parseInt(request.getParameter("DNI"));
         String nombreCompleto = request.getParameter("NombreCompleto");

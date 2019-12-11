@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class mostrarSocios extends HttpServlet {
 
-    DBManager db = new DBManager();
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,6 +37,7 @@ public class mostrarSocios extends HttpServlet {
         ServletContext contexto = request.getServletContext();
         
         
+        DBManager db = new DBManager();
         ArrayList socios = db.mostrarSocios();
         request.setAttribute("socios", socios);
 

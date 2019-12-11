@@ -20,8 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author enrique
  */
 public class ModificarMaquina extends HttpServlet {
-    
-    DBManager db = new DBManager();
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,7 +39,7 @@ public class ModificarMaquina extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ModificarMaquina</title>");            
+            out.println("<title>Servlet ModificarMaquina</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ModificarMaquina at " + request.getContextPath() + "</h1>");
@@ -61,20 +60,15 @@ public class ModificarMaquina extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            ServletContext contexto = request.getServletContext();
-            String nombreMaquina = request.getParameter("maquina");
-            int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+        ServletContext contexto = request.getServletContext();
+        Maquina maquina = new Maquina();
+        maquina.setCantidad(Integer.parseInt(request.getParameter("cantidad")));
+        maquina.setMaquina(request.getParameter("maquina"));
 
-            
-            Maquina maquina = new Maquina();
-            maquina.setCantidad(cantidad);
-            maquina.setMaquina(nombreMaquina);
-            
-            request.setAttribute("maquina", maquina);
-           
+        request.setAttribute("maquina", maquina);
 
-            RequestDispatcher mostrarClases = contexto.getRequestDispatcher("/modificarMaquina.xhtml");
-            mostrarClases.forward(request, response);  
+        RequestDispatcher mostrarClases = contexto.getRequestDispatcher("/modificarMaquina.xhtml");
+        mostrarClases.forward(request, response);
     }
 
     /**
@@ -89,6 +83,7 @@ public class ModificarMaquina extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ServletContext contexto = request.getServletContext();
+        DBManager db = new DBManager();
         String maquina = request.getParameter("maquinaOriginal");
         String nombreMaquina = request.getParameter("MAQUINA");
         int cantidad = Integer.parseInt(request.getParameter("CANTIDAD"));

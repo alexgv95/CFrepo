@@ -7,7 +7,6 @@ package maquinas;
 
 import dataBase.DBManager;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -21,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author enrique
  */
 public class MostrarMaquinas extends HttpServlet {
-    
-    DBManager db = new DBManager();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,6 +32,7 @@ public class MostrarMaquinas extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DBManager db = new DBManager();
         ServletContext contexto = request.getServletContext();
         ArrayList maquinas = db.mostrarMaquinas();
         request.setAttribute("maquinas", maquinas);

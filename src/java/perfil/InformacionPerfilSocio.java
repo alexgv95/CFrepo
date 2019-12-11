@@ -26,7 +26,7 @@ import login.Usuarios;
  */
 public class InformacionPerfilSocio extends HttpServlet {
 
-    DBManager db = new DBManager();
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,6 +46,7 @@ public class InformacionPerfilSocio extends HttpServlet {
             HttpSession sesion = request.getSession();
             Integer id_usuario = (Integer) sesion.getAttribute("id_usuario");
             
+            DBManager db = new DBManager();
             Usuarios usr = db.usuarioID(id_usuario);
             request.setAttribute("nombreSocio", usr.getNombre());
             request.setAttribute("apellidosSocio", usr.getApellidos());

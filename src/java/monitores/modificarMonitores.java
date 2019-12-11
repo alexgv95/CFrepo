@@ -5,33 +5,21 @@
  */
 package monitores;
 
-import clases.mostrarInformacion;
 import dataBase.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 /**
  *
  * @author rootjsn
  */
 public class modificarMonitores extends HttpServlet {
-
-    DBManager db = new DBManager();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -97,16 +85,17 @@ public class modificarMonitores extends HttpServlet {
             throws ServletException, IOException {
 
         ServletContext context = request.getServletContext();
-        
+
         Integer dniOriginal = Integer.parseInt(request.getParameter("dniOriginal"));
         Integer dni = Integer.parseInt(request.getParameter("dni"));
         String nombre = request.getParameter("nombreCompleto");
         String email = request.getParameter("email");
         String numeroSS = request.getParameter("numeroSS");
         String telefono = request.getParameter("telefono");
-        
+
+        DBManager db = new DBManager();
         db.modificarMonitor(nombre, dni, email, telefono, numeroSS, dniOriginal);
-        
+
         RequestDispatcher pInici = context.getRequestDispatcher("/muestraMonitores");
         pInici.forward(request, response);
 

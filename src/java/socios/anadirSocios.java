@@ -7,29 +7,18 @@ package socios;
 
 import dataBase.DBManager;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 /**
  *
  * @author Ignacio Goirena
  */
 public class anadirSocios extends HttpServlet {
-
-    DBManager db = new DBManager();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,6 +41,7 @@ public class anadirSocios extends HttpServlet {
         String apellidos = request.getParameter("APELLIDOS");
         String direccion = request.getParameter("DIRECCION");
 
+        DBManager db = new DBManager();
         db.anadirSocio(nombre, dni, password, tipo, apellidos, direccion);
 
         RequestDispatcher gestionSocios = context.getRequestDispatcher("/mostrarSocios");

@@ -21,8 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author enrique
  */
 public class BorrarMaquina extends HttpServlet {
-    
-        DBManager db = new DBManager();
+
+    DBManager db = new DBManager();
+    public final Object lockSyn = new Object();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +42,7 @@ public class BorrarMaquina extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BorrarMaquina</title>");            
+            out.println("<title>Servlet BorrarMaquina</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet BorrarMaquina at " + request.getContextPath() + "</h1>");
@@ -63,9 +64,11 @@ public class BorrarMaquina extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ServletContext contexto = request.getServletContext();
-        ArrayList maquinas = db.mostrarMaquinas();
+        ArrayList maquinas;
+        synchronized (lockSyn) {
+            maquinas = db.mostrarMaquinas();
+        }
         request.setAttribute("maquinas", maquinas);
-
         RequestDispatcher mostrarDescripcion = contexto.getRequestDispatcher("/maquinasAdmin.xhtml");
         mostrarDescripcion.forward(request, response);
     }
@@ -83,7 +86,9 @@ public class BorrarMaquina extends HttpServlet {
             throws ServletException, IOException {
         ServletContext contexto = request.getServletContext();
         String maquina = request.getParameter("MAQUINA");
-        db.borrarMaquina(maquina);
+        synchronized (lockSyn) {
+            db.borrarMaquina(maquina);
+        }
 
         RequestDispatcher mostrarDescripcion = contexto.getRequestDispatcher("/MostrarMaquinas");
         mostrarDescripcion.forward(request, response);

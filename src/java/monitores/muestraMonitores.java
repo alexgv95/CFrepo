@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class muestraMonitores extends HttpServlet {
 
-    DBManager db = new DBManager();
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,6 +33,7 @@ public class muestraMonitores extends HttpServlet {
     public void mostrarTodosMonitores(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         ServletContext contexto = request.getServletContext();
+        DBManager db = new DBManager();
         ArrayList<Monitor> monitores = db.mostrarMonitores();
         request.setAttribute("monitores", monitores);
         RequestDispatcher mostrarMonitores = contexto.getRequestDispatcher("/monitoresAdmin.xhtml");
